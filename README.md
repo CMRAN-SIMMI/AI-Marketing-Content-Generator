@@ -1,4 +1,4 @@
-# AI Marketing Content Generator for Food Processing Bussinesse
+# AI Marketing Content Generator for Food Processing Businesses
 
 ## Project Overview 
 AI Marketing Content Generator is a full-stack web application designed to help food processing businesses create professional and engaging marketing content using Artificial Intelligence. The platform enables users to provide product information through structured forms, voice input, or an AI-powered chatbot and generates marketing materials tailored for digital platforms.
