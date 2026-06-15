@@ -8,7 +8,7 @@ function Navbar() {
           AI Marketing Content Generator
         </h1>
 
-        <div className="space-x-4">
+        <div className="flex flex-wrap gap-4 justify-center">
           <Link to="/">Home</Link>
           <Link to="/generate">Generate</Link>
           <Link to="/assistant">Assistant</Link>
