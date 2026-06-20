@@ -1,18 +1,25 @@
 function Hero() {
   return (
-    <section className="text-center py-16 bg-green-100">
-      <h2 className="text-4xl font-bold mb-4">
-        Create Marketing Content with AI
-      </h2>
+    <section className="bg-gradient-to-r from-green-600 to-emerald-500 text-white py-24">
 
-      <p className="text-lg mb-6">
-        Generate descriptions, captions, hashtags and taglines for your food products.
-      </p>
+      <div className="max-w-5xl mx-auto text-center px-4">
 
-      <button className="bg-green-700 text-white px-6 py-3 rounded-lg">
-        Get Started
-      </button>
+        <h1 className="text-5xl font-bold mb-6">
+          🚀 AI Marketing Content Generator
+        </h1>
+
+        <p className="text-xl mb-8">
+          Generate product descriptions, social media captions,
+          taglines and hashtags for food processing businesses.
+        </p>
+
+        <button className="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100">
+          Start Generating
+        </button>
+
+      </div>
     </section>
   );
 }
+
 export default Hero;
