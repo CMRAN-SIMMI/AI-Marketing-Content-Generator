@@ -1,20 +1,42 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="bg-green-700 text-white p-4">
-      <div className="max-w-6xl mx-auto flex justify-between items-center">
-        <h1 className="text-xl font-bold">
-          AI Marketing Content Generator
+    <nav className="bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <h1 className="text-2xl font-bold text-green-600">
+          AI Marketing
         </h1>
 
-        <div className="flex flex-wrap gap-4 justify-center">
+        {/* Desktop */}
+        <div className="hidden md:flex gap-6">
           <Link to="/">Home</Link>
           <Link to="/generate">Generate</Link>
           <Link to="/assistant">Assistant</Link>
           <Link to="/history">History</Link>
         </div>
+
+        {/* Mobile */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <FaTimes /> : <FaBars />}
+        </button>
       </div>
+
+      {isOpen && (
+        <div className="md:hidden flex flex-col items-center gap-4 pb-4">
+          <Link to="/">Home</Link>
+          <Link to="/generate">Generate</Link>
+          <Link to="/assistant">Assistant</Link>
+          <Link to="/history">History</Link>
+        </div>
+      )}
     </nav>
   );
 }
