@@ -53,6 +53,49 @@ function Home() {
             />
           ))}
         </div>
+        <section className="py-16 bg-gray-100">
+      <div className="max-w-6xl mx-auto px-4">
+
+        <h2 className="text-3xl font-bold text-center mb-12">
+          How It Works
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-8">
+
+        <div className="bg-white p-6 rounded-xl shadow-lg">
+          <h3 className="text-xl font-bold mb-3">
+            1️⃣ Enter Product Details
+          </h3>
+          <p>
+            Fill in product information such as name,
+            category, ingredients and description.
+          </p>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-lg">
+          <h3 className="text-xl font-bold mb-3">
+            2️⃣ Generate Content
+          </h3>
+          <p>
+            AI creates marketing captions, product
+            descriptions and hashtags instantly.
+          </p>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-lg">
+          <h3 className="text-xl font-bold mb-3">
+            3️⃣ Copy & Share
+          </h3>
+          <p>
+            Use the generated content on social media,
+            websites and promotional campaigns.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+    </section>
       </section>
 
       <Footer />

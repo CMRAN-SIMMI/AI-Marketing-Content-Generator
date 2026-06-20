@@ -1,10 +1,25 @@
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-white text-center py-6 mt-10">
-      <p>© 2026 AI Marketing Content Generator</p>
-      <p className="text-gray-400 text-sm mt-2">
-        Built with React, Tailwind CSS and AI
-      </p>
+    <footer className="bg-gray-900 text-white py-8 mt-10">
+      <div className="max-w-6xl mx-auto text-center px-4">
+
+        <h2 className="text-2xl font-bold mb-3">
+          AI Marketing Content Generator
+        </h2>
+
+        <p className="text-gray-400 mb-4">
+          Generate marketing content for food processing businesses using AI.
+        </p>
+
+        <p className="text-sm text-gray-500">
+          Built with React, Tailwind CSS and AI
+        </p>
+
+        <p className="text-sm text-gray-500 mt-2">
+          © 2026 All Rights Reserved
+        </p>
+
+      </div>
     </footer>
   );
 }
