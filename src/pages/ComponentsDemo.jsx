@@ -9,15 +9,24 @@ import {
   Modal,
 } from "../components/ui";
 
-function ComponentsDemo() {
+function ComponentsDemo({ darkMode, setDarkMode }) {
   const [input, setInput] = useState("");
   const [showLoader, setShowLoader] = useState(false);
   const [toast, setToast] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <>
-      <Navbar />
+    <div
+  className={`min-h-screen ${
+    darkMode
+      ? "bg-gray-950 text-white"
+      : "bg-white text-black"
+  }`}
+>
+      <Navbar
+  darkMode={darkMode}
+  setDarkMode={setDarkMode}
+/>
 
       <div className="min-h-screen px-4 py-10 max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-center">
@@ -68,13 +77,14 @@ function ComponentsDemo() {
           isOpen={showModal}
           title="Demo Modal"
           onClose={() => setShowModal(false)}
+          darkMode={darkMode}
         >
           <p>This is a demo modal component.</p>
         </Modal>
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 }
 

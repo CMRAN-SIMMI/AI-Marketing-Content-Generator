@@ -1,10 +1,19 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-function History() {
+function History({ darkMode, setDarkMode }) {
   return (
-    <>
-      <Navbar />
+ <div
+      className={`min-h-screen ${
+        darkMode
+          ? "bg-gray-950 text-white"
+          : "bg-white text-black"
+      }`}
+  >
+      <Navbar
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
 
       <div className="min-h-screen flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold mb-4">
@@ -17,7 +26,7 @@ function History() {
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 }
 export default History;

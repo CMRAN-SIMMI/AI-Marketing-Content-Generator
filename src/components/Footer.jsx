@@ -1,6 +1,12 @@
-function Footer() {
+function Footer({ darkMode }) {
   return (
-    <footer className="bg-gray-900 text-white py-8 mt-10">
+    <footer
+  className={`py-8 mt-10 ${
+    darkMode
+      ? "bg-black text-white"
+      : "bg-gray-900 text-white"
+  }`}
+>
       <div className="max-w-6xl mx-auto text-center px-4">
 
         <h2 className="text-2xl font-bold mb-3">

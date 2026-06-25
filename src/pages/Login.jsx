@@ -3,16 +3,32 @@ import Footer from "../components/Footer";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 
-function Login() {
-    const handleLogin = () => {
-  alert("Login functionality will be implemented later.");
-};
-  return (
-    <>
-      <Navbar />
+function Login({ darkMode, setDarkMode }) {
+  const handleLogin = () => {
+    alert("Login functionality will be implemented later.");
+  };
 
-      <div className="min-h-screen flex flex-col items-center pt-10 px-4">
-        <div className="w-full max-w-md border rounded-lg p-6 shadow-md">
+  return (
+    <div
+  className={`min-h-screen flex flex-col ${
+    darkMode
+      ? "bg-gray-950 text-white"
+      : "bg-white text-black"
+  }`}
+>
+      <Navbar
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
+
+      <div className="flex-grow flex flex-col items-center pt-10 px-4">
+        <div
+          className={`w-full max-w-md border rounded-lg p-6 shadow-md ${
+            darkMode
+              ? "bg-gray-900 border-gray-700"
+              : "bg-white"
+          }`}
+        >
           <h1 className="text-3xl font-bold text-center mb-6">
             Login
           </h1>
@@ -34,17 +50,25 @@ function Login() {
           </div>
 
           <div className="flex justify-center">
-            <Button onClick={handleLogin}>Login</Button>
+            <Button onClick={handleLogin}>
+              Login
+            </Button>
           </div>
 
-          <p className="text-center mt-4 text-gray-600">
+          <p
+            className={`text-center mt-4 ${
+              darkMode
+                ? "text-gray-300"
+                : "text-gray-600"
+            }`}
+          >
             Don't have an account? Sign Up
           </p>
         </div>
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 }
 

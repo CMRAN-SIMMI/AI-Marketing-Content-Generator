@@ -5,14 +5,29 @@
  * @param {string} title - Modal title
  * @param {React.ReactNode} children - Content displayed inside modal
  * @param {Function} onClose - Function called when modal closes
+ * @param {boolean} darkMode - Current theme mode
  */
-function Modal({ isOpen, title, children, onClose }) {
+function Modal({
+  isOpen,
+  title,
+  children,
+  onClose,
+  darkMode,
+}) {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-xl font-bold mb-4">{title}</h2>
+      <div
+        className={`p-6 rounded-lg shadow-lg w-96 ${
+          darkMode
+            ? "bg-gray-800 text-white"
+            : "bg-white text-black"
+        }`}
+      >
+        <h2 className="text-xl font-bold mb-4">
+          {title}
+        </h2>
 
         {children}
 

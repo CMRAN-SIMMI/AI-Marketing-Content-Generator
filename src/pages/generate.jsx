@@ -6,43 +6,56 @@ import Input from "../components/ui/Input";
 import Loader from "../components/ui/Loader";
 import Toast from "../components/ui/Toast";
 
-function Generate() {
+function Generate({ darkMode, setDarkMode }) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
 
   const handleGenerate = () => {
-  if (!input.trim()) {
-    setToast({ message: "⚠ Please enter a prompt", type: "error" });
-    return;
-  }
+    if (!input.trim()) {
+      setToast({
+        message: "⚠ Please enter a prompt",
+        type: "error",
+      });
+      return;
+    }
 
-  setLoading(true);
-  setOutput("");
+    setLoading(true);
+    setOutput("");
 
-  setTimeout(() => {
-    setOutput(
-      `✨ AI Generated Marketing Content:\n\n"${input}"`
-    );
+    setTimeout(() => {
+      setOutput(
+        `✨ AI Generated Marketing Content:\n\n"${input}"`
+      );
 
-    setLoading(false);
+      setLoading(false);
 
-    setToast({ message: "✅ Content generated successfully", type: "success" });
-  }, 1500);
-};
+      setToast({
+        message: "✅ Content generated successfully",
+        type: "success",
+      });
+    }, 1500);
+  };
 
   return (
-    <>
-      <Navbar />
+    <div
+      className={`min-h-screen flex flex-col ${
+        darkMode
+          ? "bg-gray-950 text-white"
+          : "bg-white text-black"
+      }`}
+    >
+      <Navbar
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
 
-      <div className="min-h-screen flex flex-col items-center justify-start px-4 pt-10">
-
+      <div className="flex-grow flex flex-col items-center px-4 pt-10">
         <h1 className="text-3xl font-bold mb-4 text-center">
           Generate Marketing Content
         </h1>
 
-        {/* Input */}
         <div className="w-full max-w-xl mb-4">
           <Input
             value={input}
@@ -51,38 +64,51 @@ function Generate() {
           />
         </div>
 
-        {/* Button */}
-        <Button onClick={handleGenerate} disabled={loading}>
+        <Button
+          onClick={handleGenerate}
+          disabled={loading}
+        >
           Generate
         </Button>
 
-        {/* Loader */}
         {loading && (
           <div className="mt-6 w-full max-w-xl">
             <Loader />
-            <p className="text-center text-gray-500">
+            <p
+              className={
+                darkMode
+                  ? "text-gray-300 text-center"
+                  : "text-gray-500 text-center"
+              }
+            >
               Generating content...
             </p>
           </div>
         )}
 
-        {/* Output */}
         {output && !loading && (
-          <div className="mt-6 w-full max-w-xl p-4 bg-gray-100 rounded-md whitespace-pre-line">
+          <div
+            className={`mt-6 w-full max-w-xl p-4 rounded-md whitespace-pre-line ${
+              darkMode
+                ? "bg-gray-800 text-white"
+                : "bg-gray-100 text-black"
+            }`}
+          >
             {output}
           </div>
         )}
+
         {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-)}
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
+          />
+        )}
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 }
 
