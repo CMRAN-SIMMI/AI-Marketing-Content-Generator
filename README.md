@@ -39,10 +39,95 @@ This project aims to simplify content creation by leveraging Artificial Intellig
   2. Product information is processed by the backend.
   3. OpenAI API generates marketing content.
   4. Generated content is displayed to the user.
-  5. Content is stored in the database for future reference.
+  5. Content is temporarily stored in the server's in-memory storage for future reference.
 
 ## Expected Outcomes
   - Faster content creation process
   - Improved digital marketing support for food businesses
   - User-friendly AI-powered marketing assistant
   - Enhanced product visibility through optimized marketing content
+## Technologies Used
+
+### Frontend
+
+* React.js
+* Tailwind CSS
+* Axios
+* React Router
+
+### Backend
+
+* Node.js
+* Express.js
+* CORS
+* Dotenv
+
+---
+
+## How to Run the Project Locally
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-github-repository-url>
+```
+
+### 2. Navigate to the Backend Folder
+
+```bash
+cd backend
+```
+
+### 3. Install Backend Dependencies
+
+```bash
+npm install
+```
+
+### 4. Create Environment File
+
+Create a `.env` file inside the `backend` folder with:
+
+```env
+PORT=5000
+```
+
+### 5. Start the Backend Server
+
+```bash
+npm run dev
+```
+
+The backend will run at:
+
+```
+http://localhost:5000
+```
+
+---
+
+### 6. Navigate to the Frontend Folder
+
+Open a new terminal:
+
+```bash
+cd frontend
+```
+
+### 7. Install Frontend Dependencies
+
+```bash
+npm install
+```
+
+### 8. Start the Frontend
+
+```bash
+npm run dev
+```
+
+The frontend will run at:
+
+```
+http://localhost:5173
+```

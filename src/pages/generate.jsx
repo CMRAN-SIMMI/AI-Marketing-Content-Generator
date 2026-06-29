@@ -6,6 +6,7 @@ import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import Loader from "../components/ui/Loader";
 import Toast from "../components/ui/Toast";
+import API from "../api/contentApi";
 
 function Generate({ darkMode, setDarkMode }) {
   const [productName, setProductName] = useState("");
@@ -16,44 +17,50 @@ function Generate({ darkMode, setDarkMode }) {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
 
-  const handleGenerate = () => {
-    if (
-      !productName.trim() ||
-      !category.trim() ||
-      !prompt.trim()
-    ) {
-      setToast({
-        message: "⚠ Please fill all fields",
-        type: "error",
-      });
-      return;
-    }
+  const handleGenerate = async () => {
+  if (
+    !productName.trim() ||
+    !category.trim() ||
+    !prompt.trim()
+  ) {
+    setToast({
+      message: "⚠ Please fill all fields",
+      type: "error",
+    });
+    return;
+  }
 
+  try {
     setLoading(true);
     setOutput("");
 
-    // Temporary mock response
-    setTimeout(() => {
-      setOutput(
-`🌟 Marketing Content
+    const response = await API.post("/", {
+      productName,
+      category,
+      prompt,
+    });
 
-Product: ${productName}
+    setOutput(response.data.data.generatedContent);
 
-Category: ${category}
+    setToast({
+      message: "✅ Content generated successfully",
+      type: "success",
+    });
 
-Prompt: ${prompt}
+  } catch (error) {
+    console.error(error);
 
-✨ AI-generated marketing content will appear here after we connect the backend.`
-      );
+    setToast({
+      message:
+        error.response?.data?.message ||
+        "❌ Something went wrong",
+      type: "error",
+    });
 
-      setLoading(false);
-
-      setToast({
-        message: "✅ Content generated successfully",
-        type: "success",
-      });
-    }, 1500);
-  };
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div
