@@ -1,13 +1,18 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-
+const mongoose = require("mongoose");
 const contentRoutes = require("./routes/contentRoutes");
 const errorHandler = require("./middleware/errorHandler");
 
+
 // Load environment variables
 dotenv.config();
-
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected"))
+  .catch(err => {
+    console.log(err);
+  });
 const app = express();
 
 // Middleware
