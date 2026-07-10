@@ -1,10 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 function Navbar({ darkMode, setDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
+  const isLoggedIn = !!localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   const linkStyle = ({ isActive }) =>
     isActive
       ? "text-green-600 font-bold"
@@ -41,9 +48,18 @@ function Navbar({ darkMode, setDarkMode }) {
             History
           </NavLink>
 
-          <NavLink to="/login" className={linkStyle}>
-            Login
-          </NavLink>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="text-red-500 hover:text-red-700 font-semibold"
+            >
+              Logout
+            </button>
+          ) : (
+            <NavLink to="/login" className={linkStyle}>
+              Login
+            </NavLink>
+          )}
 
           <button
             onClick={() => setDarkMode(!darkMode)}
@@ -103,13 +119,25 @@ function Navbar({ darkMode, setDarkMode }) {
             History
           </NavLink>
 
-          <NavLink
-            to="/login"
-            className={linkStyle}
-            onClick={() => setIsOpen(false)}
-          >
-            Login
-          </NavLink>
+          {isLoggedIn ? (
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsOpen(false);
+              }}
+              className="text-red-500 font-semibold"
+            >
+              Logout
+            </button>
+          ) : (
+            <NavLink
+              to="/login"
+              className={linkStyle}
+              onClick={() => setIsOpen(false)}
+            >
+              Login
+            </NavLink>
+          )}
 
           <button
             onClick={() => setDarkMode(!darkMode)}

@@ -1,12 +1,34 @@
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
+import AuthAPI from "../api/authApi";
 
 function Login({ darkMode, setDarkMode }) {
-  const handleLogin = () => {
-    alert("Login functionality will be implemented later.");
-  };
+const navigate = useNavigate();
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const handleLogin = async () => {
+  try {
+    const response = await AuthAPI.post("/login", {
+      email,
+      password,
+    });
+
+    localStorage.setItem("token", response.data.token);
+
+    alert("Login Successful!");
+
+    navigate("/");
+  } catch (error) {
+    alert(
+      error.response?.data?.message || "Login Failed"
+    );
+  }
+};
 
   return (
     <div
@@ -38,6 +60,8 @@ function Login({ darkMode, setDarkMode }) {
               label="Email"
               placeholder="Enter your email"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -46,6 +70,8 @@ function Login({ darkMode, setDarkMode }) {
               label="Password"
               placeholder="Enter your password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -55,15 +81,19 @@ function Login({ darkMode, setDarkMode }) {
             </Button>
           </div>
 
-          <p
-            className={`text-center mt-4 ${
-              darkMode
-                ? "text-gray-300"
-                : "text-gray-600"
-            }`}
+         <p
+          className={`text-center mt-4 ${
+            darkMode ? "text-gray-300" : "text-gray-600"
+          }`}
+        >
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            className="text-green-600 font-semibold"
           >
-            Don't have an account? Sign Up
-          </p>
+            Sign Up
+          </Link>
+        </p>
         </div>
       </div>
 

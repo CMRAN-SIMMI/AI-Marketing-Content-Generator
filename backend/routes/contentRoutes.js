@@ -1,5 +1,5 @@
 const express = require("express");
-
+const verifyToken = require("../middleware/authMiddleware");
 const {
   getAllContent,
   getContentById,
@@ -10,6 +10,7 @@ const {
 } = require("../controllers/contentController");
 
 const router = express.Router();
+router.use(verifyToken);
 
 router.get("/search", searchContent);
 router.get("/", getAllContent);

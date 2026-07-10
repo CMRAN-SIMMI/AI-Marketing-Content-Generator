@@ -1,3 +1,4 @@
+import ProtectedRoute from "./components/ProtectedRoute";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
@@ -7,6 +8,7 @@ import Assistant from "./pages/Assistant";
 import History from "./pages/History";
 import Login from "./pages/Login";
 import ComponentsDemo from "./pages/ComponentsDemo";
+import Register from "./pages/Register";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -35,30 +37,36 @@ function App() {
       <Route
         path="/generate"
         element={
-          <Generate
-            darkMode={darkMode}
-            setDarkMode={setDarkMode}
-          />
+          <ProtectedRoute>
+            <Generate
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+            />
+          </ProtectedRoute>
         }
       />
 
       <Route
         path="/assistant"
         element={
-          <Assistant
-            darkMode={darkMode}
-            setDarkMode={setDarkMode}
-          />
+          <ProtectedRoute>
+            <Assistant
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+            />
+          </ProtectedRoute>
         }
       />
 
       <Route
         path="/history"
         element={
-          <History
-            darkMode={darkMode}
-            setDarkMode={setDarkMode}
-          />
+          <ProtectedRoute>
+            <History
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+            />
+          </ProtectedRoute>
         }
       />
 
@@ -66,6 +74,16 @@ function App() {
         path="/login"
         element={
           <Login
+            darkMode={darkMode}
+            setDarkMode={setDarkMode}
+          />
+        }
+      />
+
+      <Route
+        path="/register"
+        element={
+          <Register
             darkMode={darkMode}
             setDarkMode={setDarkMode}
           />
