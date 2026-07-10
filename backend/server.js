@@ -5,7 +5,9 @@ const mongoose = require("mongoose");
 const contentRoutes = require("./routes/contentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const errorHandler = require("./middleware/errorHandler");
-
+const passport = require("passport");
+const session = require("express-session");
+require("./config/passport");
 
 // Load environment variables
 dotenv.config();
@@ -17,8 +19,29 @@ mongoose.connect(process.env.MONGO_URI)
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
+
+
+app.use(
+  session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use("/api/content", contentRoutes);

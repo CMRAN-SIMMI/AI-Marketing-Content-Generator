@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 const authLimiter = require("../middleware/rateLimiter");
 
 const { body } = require("express-validator");
@@ -43,5 +44,22 @@ router.post(
   ],
   loginUser
 );
-
+// Google Login
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+// Google Callback
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+    session: true,
+  }),
+  (req, res) => {
+    res.redirect("http://localhost:5173");
+  }
+);
 module.exports = router;
