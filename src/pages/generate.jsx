@@ -82,12 +82,13 @@ function Generate({ darkMode, setDarkMode }) {
 
         {/* Product Name */}
         <div className="w-full max-w-xl mb-4">
-          <Input
-            label="Product Name"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            placeholder="Enter product name"
-          />
+        <Input
+          label="Product Name"
+          placeholder="Enter product name"
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+          darkMode={darkMode}
+        />
         </div>
 
         {/* Category */}
@@ -97,6 +98,7 @@ function Generate({ darkMode, setDarkMode }) {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             placeholder="Enter category"
+            darkMode={darkMode}
           />
         </div>
 
@@ -107,16 +109,20 @@ function Generate({ darkMode, setDarkMode }) {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Example: Generate Instagram Caption"
+            darkMode={darkMode}
           />
         </div>
 
         {/* Button */}
-        <Button
-          onClick={handleGenerate}
-          disabled={loading}
-        >
-          Generate
-        </Button>
+        <div className="w-full max-w-xl">
+          <Button
+            onClick={handleGenerate}
+            disabled={loading}
+            className="w-full"
+          >
+            🚀 Generate Content
+          </Button>
+        </div>
 
         {/* Loader */}
         {loading && (
@@ -137,13 +143,19 @@ function Generate({ darkMode, setDarkMode }) {
         {/* Output */}
         {output && !loading && (
           <div
-            className={`mt-6 w-full max-w-xl p-4 rounded-md whitespace-pre-line ${
+            className={`mt-8 w-full max-w-xl rounded-xl p-6 shadow-lg ${
               darkMode
-                ? "bg-gray-800 text-white"
-                : "bg-gray-100 text-black"
+                ? "bg-gray-900 border border-gray-700 text-white"
+                : "bg-white border border-gray-200 text-black"
             }`}
           >
-            {output}
+            <h2 className="text-xl font-semibold mb-4">
+              ✨ Generated Content
+            </h2>
+
+            <div className="whitespace-pre-line">
+              {output}
+            </div>
           </div>
         )}
 

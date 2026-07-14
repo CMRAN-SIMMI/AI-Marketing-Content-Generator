@@ -1,16 +1,23 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+
+// Load environment variables
+dotenv.config();
+
 const mongoose = require("mongoose");
 const contentRoutes = require("./routes/contentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const errorHandler = require("./middleware/errorHandler");
 const passport = require("passport");
 const session = require("express-session");
+
 require("./config/passport");
 
-// Load environment variables
-dotenv.config();
+
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "Loaded" : "Not Loaded");
+console.log("JWT_SECRET:", process.env.JWT_SECRET ? "Loaded" : "Not Loaded");
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected"))
   .catch(err => {

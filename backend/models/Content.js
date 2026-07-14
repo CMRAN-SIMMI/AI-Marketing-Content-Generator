@@ -2,6 +2,13 @@ const mongoose = require("mongoose");
 
 const contentSchema = new mongoose.Schema(
   {
+    // Owner of this generated content
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     productName: {
       type: String,
       required: true,

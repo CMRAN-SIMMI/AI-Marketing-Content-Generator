@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 const authLimiter = require("../middleware/rateLimiter");
 
 const { body } = require("express-validator");
@@ -59,7 +60,19 @@ router.get(
     session: true,
   }),
   (req, res) => {
-    res.redirect("http://localhost:5173");
+    const token = jwt.sign(
+      {
+        id: req.user._id,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
+
+    res.redirect(
+      `http://localhost:5173/oauth-success?token=${token}`
+    );
   }
 );
 module.exports = router;

@@ -1,14 +1,16 @@
-import ProtectedRoute from "./components/ProtectedRoute";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Generate from "./pages/Generate";
 import Assistant from "./pages/Assistant";
 import History from "./pages/History";
 import Login from "./pages/Login";
-import ComponentsDemo from "./pages/ComponentsDemo";
 import Register from "./pages/Register";
+import ComponentsDemo from "./pages/ComponentsDemo";
+import OAuthSuccess from "./pages/OAuthSuccess";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -88,6 +90,12 @@ function App() {
             setDarkMode={setDarkMode}
           />
         }
+      />
+
+      {/* Google OAuth Success Route */}
+      <Route
+        path="/oauth-success"
+        element={<OAuthSuccess />}
       />
 
       <Route
