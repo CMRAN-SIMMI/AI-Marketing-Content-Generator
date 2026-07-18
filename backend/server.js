@@ -8,6 +8,7 @@ dotenv.config();
 const mongoose = require("mongoose");
 const contentRoutes = require("./routes/contentRoutes");
 const authRoutes = require("./routes/authRoutes");
+const aiRoutes = require("./routes/aiRoutes");
 const errorHandler = require("./middleware/errorHandler");
 const passport = require("passport");
 const session = require("express-session");
@@ -53,6 +54,7 @@ app.use(passport.session());
 // Routes
 app.use("/api/content", contentRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/ai", aiRoutes);
 
 // Home Route
 app.get("/", (req, res) => {

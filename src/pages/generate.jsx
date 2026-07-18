@@ -7,6 +7,7 @@ import Input from "../components/ui/Input";
 import Loader from "../components/ui/Loader";
 import Toast from "../components/ui/Toast";
 import API from "../api/contentApi";
+import AI from "../api/aiApi";
 
 function Generate({ darkMode, setDarkMode }) {
   const [productName, setProductName] = useState("");
@@ -17,7 +18,7 @@ function Generate({ darkMode, setDarkMode }) {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
 
-  const handleGenerate = async () => {
+const handleGenerate = async () => {
   if (
     !productName.trim() ||
     !category.trim() ||
@@ -34,16 +35,29 @@ function Generate({ darkMode, setDarkMode }) {
     setLoading(true);
     setOutput("");
 
-    const response = await API.post("/", {
+    // 1️⃣ Generate content using Gemini
+    const aiResponse = await AI.post("/generate", {
       productName,
       category,
       prompt,
     });
 
-    setOutput(response.data.data.generatedContent);
+    const generatedContent =
+      aiResponse.data.generatedContent;
+
+    // 2️⃣ Save generated content to MongoDB
+    await API.post("/", {
+      productName,
+      category,
+      prompt,
+      generatedContent,
+    });
+
+    // 3️⃣ Show content on screen
+    setOutput(generatedContent);
 
     setToast({
-      message: "✅ Content generated successfully",
+      message: "✅ AI Content Generated Successfully",
       type: "success",
     });
 
@@ -53,7 +67,7 @@ function Generate({ darkMode, setDarkMode }) {
     setToast({
       message:
         error.response?.data?.message ||
-        "❌ Something went wrong",
+        "❌ Failed to generate AI content",
       type: "error",
     });
 

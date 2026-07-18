@@ -42,6 +42,7 @@ const getContentById = async (req, res) => {
 };
 
 // POST new content
+// POST new content
 const createContent = async (req, res) => {
   try {
     const {
@@ -52,6 +53,7 @@ const createContent = async (req, res) => {
       hashtags,
     } = req.body;
 
+    // Validation
     if (!productName || !category || !prompt) {
       return res.status(400).json({
         success: false,
@@ -66,19 +68,8 @@ const createContent = async (req, res) => {
       category,
       prompt,
 
-      generatedContent:
-        generatedContent ||
-        `🌟 Marketing Description
-
-    Introducing ${productName}, a premium ${category.toLowerCase()} product crafted with quality and care. Designed to deliver exceptional taste and value, it is the perfect choice for customers looking for freshness, quality, and reliability.
-
-    ✨ Product Highlights
-    • Premium Quality
-    • Fresh Ingredients
-    • Rich Taste
-    • Perfect for Everyday Use
-
-    📢 Experience the difference today with ${productName}!`,
+      // Save the AI-generated content received from Gemini
+      generatedContent,
 
       hashtags: hashtags || [],
     });
@@ -88,7 +79,10 @@ const createContent = async (req, res) => {
       message: "Content created successfully.",
       data: newContent,
     });
+
   } catch (err) {
+    console.error(err);
+
     res.status(500).json({
       success: false,
       message: err.message,
