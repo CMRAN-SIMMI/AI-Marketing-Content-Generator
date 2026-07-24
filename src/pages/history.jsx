@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import API from "../api/contentApi";
@@ -7,6 +8,8 @@ function History({ darkMode, setDarkMode }) {
   const [contents, setContents] = useState([]);
   const [editing, setEditing] = useState(null);
   const [newPrompt, setNewPrompt] = useState("");
+  const [deleteId, setDeleteId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -79,9 +82,35 @@ const handleUpdate = async () => {
           Content History
         </h1>
 
-        {contents.length === 0 ? (
-          <p>No content available.</p>
-        ) : (
+      {contents.length === 0 ? (
+        <div
+          className={`rounded-xl shadow-lg p-10 text-center ${
+            darkMode ? "bg-gray-800" : "bg-white"
+          }`}
+        >
+          <div className="text-6xl mb-4">📂</div>
+
+          <h2 className="text-2xl font-bold mb-2">
+            No Marketing Content Yet
+          </h2>
+
+          <p
+            className={`mb-6 ${
+              darkMode ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
+            You haven't generated any AI marketing content yet.
+            Start by creating your first marketing campaign.
+          </p>
+
+          <button
+            onClick={() => navigate("/generate")}
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg"
+          >
+            Generate Content
+          </button>
+        </div>
+      ) : (
           contents.map((item) => (
             <div
               key={item._id}
@@ -115,7 +144,7 @@ const handleUpdate = async () => {
               </button>
 
               <button
-                onClick={() => handleDelete(item._id)}
+                onClick={() => setDeleteId(item._id)}
                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
               >
                 Delete
@@ -151,6 +180,47 @@ const handleUpdate = async () => {
               >
                 Cancel
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {deleteId && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div
+            className={`w-96 rounded-xl p-6 shadow-xl ${
+              darkMode
+                ? "bg-gray-900 text-white"
+                : "bg-white text-black"
+            }`}
+          >
+            <h2 className="text-2xl font-bold mb-3">
+              ⚠ Delete Content
+            </h2>
+
+            <p className="mb-6">
+              Are you sure you want to permanently delete this
+              marketing content?
+            </p>
+
+            <div className="flex justify-end gap-3">
+
+              <button
+                onClick={() => setDeleteId(null)}
+                className="px-4 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={() => {
+                  handleDelete(deleteId);
+                  setDeleteId(null);
+                }}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+              >
+                Delete
+              </button>
+
             </div>
           </div>
         </div>

@@ -4,11 +4,14 @@ import { BrowserRouter } from "react-router-dom";
 import { StrictMode } from "react";
 import App from "./App";
 import "./index.css";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <StrictMode>
+<StrictMode>
+  <ErrorBoundary>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </StrictMode>
+  </ErrorBoundary>
+</StrictMode>
 );

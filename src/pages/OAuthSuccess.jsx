@@ -14,7 +14,10 @@ function OAuthSuccess() {
 
       alert("Google Login Successful!");
 
-      navigate("/");
+      // Small delay so localStorage is available before routing
+      setTimeout(() => {
+        navigate("/dashboard", { replace: true });
+      }, 100);
     } else {
       navigate("/login");
     }

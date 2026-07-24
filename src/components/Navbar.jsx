@@ -36,6 +36,10 @@ function Navbar({ darkMode, setDarkMode }) {
             Home
           </NavLink>
 
+        <NavLink to="/dashboard" className={linkStyle}>
+          Dashboard
+        </NavLink>
+
           <NavLink to="/generate" className={linkStyle}>
             Generate
           </NavLink>
@@ -93,6 +97,14 @@ function Navbar({ darkMode, setDarkMode }) {
             onClick={() => setIsOpen(false)}
           >
             Home
+          </NavLink>
+
+          <NavLink
+            to="/dashboard"
+            className={linkStyle}
+            onClick={() => setIsOpen(false)}
+          >
+            Dashboard
           </NavLink>
 
           <NavLink

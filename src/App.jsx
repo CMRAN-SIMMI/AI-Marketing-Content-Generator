@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Generate from "./pages/Generate";
+import Dashboard from "./pages/Dashboard";
 import Assistant from "./pages/Assistant";
 import History from "./pages/History";
 import Login from "./pages/Login";
@@ -33,6 +34,18 @@ function App() {
             darkMode={darkMode}
             setDarkMode={setDarkMode}
           />
+        }
+      />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard
+              darkMode={darkMode}
+              setDarkMode={setDarkMode}
+            />
+          </ProtectedRoute>
         }
       />
 

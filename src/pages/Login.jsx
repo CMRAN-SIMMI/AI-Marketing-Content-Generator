@@ -25,7 +25,7 @@ function Login({ darkMode, setDarkMode }) {
 
       alert("Login Successful!");
 
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       alert(error.response?.data?.message || "Login Failed");
     }
