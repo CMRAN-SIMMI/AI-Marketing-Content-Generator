@@ -263,7 +263,7 @@ GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 
 GROQ_API_KEY=your_groq_api_key
----
+```
 
 ## 5. Start the Backend Server
 
