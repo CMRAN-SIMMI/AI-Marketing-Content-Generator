@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-
+import Toast from "../components/ui/Toast";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/ui/Button";
@@ -13,7 +13,11 @@ function Login({ darkMode, setDarkMode }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    type: "success",
+  });
   const handleLogin = async () => {
     try {
       const response = await AuthAPI.post("/login", {
@@ -23,14 +27,27 @@ function Login({ darkMode, setDarkMode }) {
 
       localStorage.setItem("token", response.data.token);
 
-      alert("Login Successful!");
+      setToast({
+        show: true,
+        message: "Login Successful!",
+        type: "success",
+      });
 
-      navigate("/");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1500);
+
     } catch (error) {
-      alert(error.response?.data?.message || "Login Failed");
+
+      setToast({
+        show: true,
+        message:
+          error.response?.data?.message || "Login Failed",
+        type: "error",
+      });
+
     }
   };
-
   const handleGoogleLogin = () => {
     window.location.href =
       "http://localhost:5000/api/auth/google";
@@ -154,7 +171,18 @@ function Login({ darkMode, setDarkMode }) {
         </div>
 
       </div>
-
+      {toast.show && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() =>
+            setToast({
+              ...toast,
+              show: false,
+            })
+          }
+        />
+      )}
       <Footer />
     </div>
   );

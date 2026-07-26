@@ -10,8 +10,10 @@ const contentRoutes = require("./routes/contentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const aiRoutes = require("./routes/aiRoutes");
 const errorHandler = require("./middleware/errorHandler");
+const chatRoutes = require("./routes/chatRoutes");
 const passport = require("passport");
 const session = require("express-session");
+
 
 require("./config/passport");
 
@@ -55,6 +57,7 @@ app.use(passport.session());
 app.use("/api/content", contentRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/chat", chatRoutes);
 
 // Home Route
 app.get("/", (req, res) => {

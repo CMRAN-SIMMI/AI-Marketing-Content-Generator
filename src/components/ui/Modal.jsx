@@ -31,12 +31,14 @@ function Modal({
 
         {children}
 
+      {!children && (
         <button
           onClick={onClose}
           className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
         >
           Close
         </button>
+      )}
       </div>
     </div>
   );

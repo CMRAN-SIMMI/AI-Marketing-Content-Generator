@@ -1,10 +1,12 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useLanguage } from "../context/LanguageContext";
 
 function Navbar({ darkMode, setDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { language, setLanguage, t } = useLanguage();
 
   const isLoggedIn = !!localStorage.getItem("token");
 
@@ -33,19 +35,23 @@ function Navbar({ darkMode, setDarkMode }) {
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-6 items-center">
           <NavLink to="/" className={linkStyle}>
-            Home
+            {t.home}
           </NavLink>
 
+        <NavLink to="/dashboard" className={linkStyle}>
+          {t.dashboard}
+        </NavLink>
+
           <NavLink to="/generate" className={linkStyle}>
-            Generate
+            {t.generate}
           </NavLink>
 
           <NavLink to="/assistant" className={linkStyle}>
-            Assistant
+            {t.assistant}
           </NavLink>
 
           <NavLink to="/history" className={linkStyle}>
-            History
+            {t.history}
           </NavLink>
 
           {isLoggedIn ? (
@@ -53,20 +59,35 @@ function Navbar({ darkMode, setDarkMode }) {
               onClick={handleLogout}
               className="text-red-500 hover:text-red-700 font-semibold"
             >
-              Logout
+              {t.logout}
             </button>
           ) : (
             <NavLink to="/login" className={linkStyle}>
-              Login
+              {t.login}
             </NavLink>
           )}
+
+         <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            className={`rounded-md px-2 py-1 border text-sm ${
+              darkMode
+                ? "bg-gray-800 border-gray-600 text-white"
+                : "bg-white border-gray-300 text-black"
+            }`}
+          >
+            <option value="English">🇺🇸 English</option>
+            <option value="Hindi">🇮🇳 हिन्दी</option>
+          </select>
 
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="px-3 py-1 border rounded-md hover:bg-gray-200 text-sm"
           >
-            {darkMode ? "☀️ Light" : "🌙 Dark"}
+            {darkMode ? `☀️ light` : `🌙 dark`}
           </button>
+         
+
         </div>
 
         {/* Mobile Menu Button */}
@@ -92,7 +113,15 @@ function Navbar({ darkMode, setDarkMode }) {
             className={linkStyle}
             onClick={() => setIsOpen(false)}
           >
-            Home
+            {t.home}
+          </NavLink>
+
+          <NavLink
+            to="/dashboard"
+            className={linkStyle}
+            onClick={() => setIsOpen(false)}
+          >
+            {t.dashboard}
           </NavLink>
 
           <NavLink
@@ -100,7 +129,7 @@ function Navbar({ darkMode, setDarkMode }) {
             className={linkStyle}
             onClick={() => setIsOpen(false)}
           >
-            Generate
+            {t.generate}
           </NavLink>
 
           <NavLink
@@ -108,7 +137,7 @@ function Navbar({ darkMode, setDarkMode }) {
             className={linkStyle}
             onClick={() => setIsOpen(false)}
           >
-            Assistant
+            {t.assistant}
           </NavLink>
 
           <NavLink
@@ -116,7 +145,7 @@ function Navbar({ darkMode, setDarkMode }) {
             className={linkStyle}
             onClick={() => setIsOpen(false)}
           >
-            History
+            {t.history}
           </NavLink>
 
           {isLoggedIn ? (
@@ -127,7 +156,7 @@ function Navbar({ darkMode, setDarkMode }) {
               }}
               className="text-red-500 font-semibold"
             >
-              Logout
+              {t.logout}
             </button>
           ) : (
             <NavLink
@@ -135,9 +164,22 @@ function Navbar({ darkMode, setDarkMode }) {
               className={linkStyle}
               onClick={() => setIsOpen(false)}
             >
-              Login
+              {t.login}
             </NavLink>
           )}
+
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            className={`rounded-md px-2 py-1 border text-sm ${
+              darkMode
+                ? "bg-gray-800 border-gray-600 text-white"
+                : "bg-white border-gray-300 text-black"
+            }`}
+          >
+            <option value="English">🇺🇸 English</option>
+            <option value="Hindi">🇮🇳 हिन्दी</option>
+          </select>
 
           <button
             onClick={() => setDarkMode(!darkMode)}
@@ -145,6 +187,10 @@ function Navbar({ darkMode, setDarkMode }) {
           >
             {darkMode ? "☀️ Light" : "🌙 Dark"}
           </button>
+
+         
+
+
         </div>
       )}
     </nav>

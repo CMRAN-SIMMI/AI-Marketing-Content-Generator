@@ -8,16 +8,17 @@ import Loader from "../components/ui/Loader";
 import Toast from "../components/ui/Toast";
 import API from "../api/contentApi";
 import AI from "../api/aiApi";
+import { useLanguage } from "../context/LanguageContext";
 
 function Generate({ darkMode, setDarkMode }) {
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState("");
   const [prompt, setPrompt] = useState("");
-
+  
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
-
+  const { t } = useLanguage();
 const handleGenerate = async () => {
   if (
     !productName.trim() ||
@@ -25,7 +26,7 @@ const handleGenerate = async () => {
     !prompt.trim()
   ) {
     setToast({
-      message: "⚠ Please fill all fields",
+      message: t.fillAllFields,
       type: "error",
     });
     return;
@@ -35,7 +36,7 @@ const handleGenerate = async () => {
     setLoading(true);
     setOutput("");
 
-    // 1️⃣ Generate content using Gemini
+    // 1️⃣ Generate content using Groq
     const aiResponse = await AI.post("/generate", {
       productName,
       category,
@@ -57,7 +58,7 @@ const handleGenerate = async () => {
     setOutput(generatedContent);
 
     setToast({
-      message: "✅ AI Content Generated Successfully",
+      message: t.generatedSuccess,
       type: "success",
     });
 
@@ -67,7 +68,7 @@ const handleGenerate = async () => {
     setToast({
       message:
         error.response?.data?.message ||
-        "❌ Failed to generate AI content",
+        t.generatedFailed,
       type: "error",
     });
 
@@ -91,14 +92,14 @@ const handleGenerate = async () => {
 
       <div className="flex-grow flex flex-col items-center px-4 pt-10">
         <h1 className="text-3xl font-bold mb-6 text-center">
-          Generate Marketing Content
+          {t.GenerateContent}
         </h1>
 
         {/* Product Name */}
         <div className="w-full max-w-xl mb-4">
         <Input
-          label="Product Name"
-          placeholder="Enter product name"
+          label={t.productName}
+          placeholder={t.enterProductName}
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
           darkMode={darkMode}
@@ -108,10 +109,10 @@ const handleGenerate = async () => {
         {/* Category */}
         <div className="w-full max-w-xl mb-4">
           <Input
-            label="Category"
+            label={t.category}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            placeholder="Enter category"
+            placeholder={t.enterCategory}
             darkMode={darkMode}
           />
         </div>
@@ -119,10 +120,10 @@ const handleGenerate = async () => {
         {/* Prompt */}
         <div className="w-full max-w-xl mb-4">
           <Input
-            label="Prompt"
+            label={t.prompt}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Example: Generate Instagram Caption"
+            placeholder={t.promptPlaceholder}
             darkMode={darkMode}
           />
         </div>
@@ -134,7 +135,7 @@ const handleGenerate = async () => {
             disabled={loading}
             className="w-full"
           >
-            🚀 Generate Content
+            {t.generateContent}
           </Button>
         </div>
 
@@ -149,7 +150,7 @@ const handleGenerate = async () => {
                   : "text-gray-500 text-center"
               }
             >
-              Generating content...
+              {t.generating}
             </p>
           </div>
         )}
@@ -164,7 +165,7 @@ const handleGenerate = async () => {
             }`}
           >
             <h2 className="text-xl font-semibold mb-4">
-              ✨ Generated Content
+              ✨ {t.generatedContent}
             </h2>
 
             <div className="whitespace-pre-line">
