@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
-
+import Toast from "../components/ui/Toast";
 import AuthAPI from "../api/authApi";
 
 function Register({ darkMode, setDarkMode }) {
@@ -14,26 +14,41 @@ function Register({ darkMode, setDarkMode }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    type: "success",
+  });
+const handleRegister = async () => {
+  try {
+    const response = await AuthAPI.post("/register", {
+      name,
+      email,
+      password,
+    });
 
-  const handleRegister = async () => {
-    try {
-      const response = await AuthAPI.post("/register", {
-        name,
-        email,
-        password,
-      });
+    setToast({
+      show: true,
+      message: response.data.message,
+      type: "success",
+    });
 
-      alert(response.data.message);
-
+    setTimeout(() => {
       navigate("/login");
-    } catch (error) {
-      alert(
-        error.response?.data?.message ||
-          "Registration failed."
-      );
-    }
-  };
+    }, 1500);
 
+  } catch (error) {
+
+    setToast({
+      show: true,
+      message:
+        error.response?.data?.message ||
+        "Registration failed.",
+      type: "error",
+    });
+
+  }
+};
   return (
     <div
       className={`min-h-screen flex flex-col ${
@@ -65,27 +80,26 @@ function Register({ darkMode, setDarkMode }) {
             placeholder="Enter your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            darkMode={darkMode}
           />
 
-          <div className="mt-4">
-            <Input
-              label="Email"
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <Input
+            label="Email"
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            darkMode={darkMode}
+          />
 
-          <div className="mt-4">
-            <Input
-              label="Password"
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            darkMode={darkMode}
+          />
 
           <div className="mt-6 flex justify-center">
             <Button onClick={handleRegister}>
@@ -105,7 +119,18 @@ function Register({ darkMode, setDarkMode }) {
         </div>
 
       </div>
-
+      {toast.show && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() =>
+            setToast({
+              ...toast,
+              show: false,
+            })
+          }
+        />
+)}
       <Footer />
     </div>
   );
