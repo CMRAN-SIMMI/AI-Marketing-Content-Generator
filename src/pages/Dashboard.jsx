@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import Toast from "../components/ui/Toast";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import API from "../api/contentApi";
@@ -8,7 +8,13 @@ import API from "../api/contentApi";
 function Dashboard({ darkMode, setDarkMode }) {
   const [contents, setContents] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    type: "success",
+  });
   useEffect(() => {
     const fetchContents = async () => {
       try {
@@ -21,6 +27,18 @@ function Dashboard({ darkMode, setDarkMode }) {
 
     fetchContents();
   }, []);
+  useEffect(() => {
+    if (location.state?.loginSuccess) {
+      setToast({
+        show: true,
+        message: "Google Login Successful!",
+        type: "success",
+      });
+
+      // Remove state so it doesn't show again on refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
 
   const categories = [
     ...new Set(contents.map((item) => item.category)),
@@ -153,7 +171,18 @@ function Dashboard({ darkMode, setDarkMode }) {
         </div>
 
       </div>
-
+      {toast.show && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() =>
+            setToast({
+              ...toast,
+              show: false,
+            })
+          }
+        />
+      )}
       <Footer />
     </div>
   );
