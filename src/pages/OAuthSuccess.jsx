@@ -16,7 +16,12 @@ function OAuthSuccess() {
 
       // Small delay so localStorage is available before routing
       setTimeout(() => {
-        navigate("/dashboard", { replace: true });
+      navigate("/dashboard", {
+        replace: true,
+        state: {
+          loginSuccess: true,
+        },
+      });
       }, 100);
     } else {
       navigate("/login");

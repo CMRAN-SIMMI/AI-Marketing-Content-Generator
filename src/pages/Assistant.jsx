@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ChatAPI from "../api/chatApi";
-
+import Modal from "../components/ui/Modal";
 
 function Assistant({ darkMode, setDarkMode }) {
   const [chats, setChats] = useState([]);
@@ -18,6 +18,8 @@ function Assistant({ darkMode, setDarkMode }) {
   message: "",
   type: "success",
 });
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [chatToDelete, setChatToDelete] = useState(null);
   const messagesEndRef = useRef(null);  
   useEffect(() => {
     fetchChats();
@@ -159,7 +161,12 @@ function Assistant({ darkMode, setDarkMode }) {
       });
     }
   };
+  const confirmDelete = async () => {
+    await handleDeleteChat(chatToDelete);
 
+    setShowDeleteModal(false);
+    setChatToDelete(null);
+  };
   return (
     <div
       className={`min-h-screen ${
@@ -240,10 +247,12 @@ function Assistant({ darkMode, setDarkMode }) {
 
                   {/* Delete Button */}
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteChat(chat._id);
-                    }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setChatToDelete(chat._id);
+                    setShowDeleteModal(true);
+                  }}
+
                     className="flex-shrink-0 text-red-500 hover:text-red-700 hover:scale-110 transition"
                   >
                     🗑️
@@ -426,18 +435,37 @@ function Assistant({ darkMode, setDarkMode }) {
 
         </div>
       </div>
-    {toast.show && (
-      <Toast
-        message={toast.message}
-        type={toast.type}
-        onClose={() =>
-          setToast((prev) => ({
-            ...prev,
-            show: false,
-          }))
-        }
-      />
-    )}
+      <Modal
+        isOpen={showDeleteModal}
+        title="⚠ Delete Conversation"
+        onClose={() => setShowDeleteModal(false)}
+        darkMode={darkMode}
+      >
+        <p className="mb-6">
+          Are you sure you want to delete this conversation?
+          <br />
+          <span className="text-red-500 text-sm">
+            This action cannot be undone.
+          </span>
+        </p>
+
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={() => setShowDeleteModal(false)}
+            className="px-4 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600"
+          >
+            Cancel
+          </button>
+
+          <button
+            onClick={confirmDelete}
+            className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+          >
+            Delete
+          </button>
+        </div>
+      </Modal>
+            
       <Footer />
     </div>
   );
