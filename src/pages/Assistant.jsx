@@ -1,4 +1,4 @@
-import Toast from "../components/ui/Toast";
+import { toast } from "react-hot-toast";
 import { useEffect, useState, useRef } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -13,14 +13,9 @@ function Assistant({ darkMode, setDarkMode }) {
   const [loading, setLoading] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [aiTyping, setAiTyping] = useState(false);
-  const [toast, setToast] = useState({
-  show: false,
-  message: "",
-  type: "success",
-});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [chatToDelete, setChatToDelete] = useState(null);
-  const messagesEndRef = useRef(null);  
+  const messagesEndRef = useRef(null); 
   useEffect(() => {
     fetchChats();
   }, []);
@@ -127,38 +122,22 @@ function Assistant({ darkMode, setDarkMode }) {
       }
 
       await fetchChats();
-      setToast({
-        show: true,
-        message: "Conversation deleted successfully!",
-        type: "success",
-      });
+      toast.success("Chat deleted successfully!");
     } catch (err) {
       console.error(err);
-      setToast({
-      show: true,
-      message: "Failed to delete conversation!",
-      type: "error",
-    });
+      toast.error("Failed to delete chat.");
     }
   };
   const handleCopy = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
 
-      setToast({
-        show: true,
-        message: "Copied to clipboard!",
-        type: "success",
-      });
+    toast.success("Copied to clipboard!");
 
     } catch (err) {
       console.error(err);
 
-      setToast({
-        show: true,
-        message: "Failed to copy!",
-        type: "error",
-      });
+    toast.error("Failed to copy!");
     }
   };
   const confirmDelete = async () => {
@@ -191,14 +170,14 @@ function Assistant({ darkMode, setDarkMode }) {
       {/* Sidebar */}
       <div
         className={`
-          fixed md:static top-16 left-0 h-[calc(100vh-64px)]
+          fixed md:static inset-y-16 left-0
           w-72 z-50
           transform transition-transform duration-300
           ${showSidebar ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
           ${darkMode ? "bg-gray-900" : "bg-gray-100"}
         `}
->
+      >
 
         <div className="p-4 border-b">
 
@@ -250,6 +229,11 @@ function Assistant({ darkMode, setDarkMode }) {
                   onClick={(e) => {
                     e.stopPropagation();
                     setChatToDelete(chat._id);
+
+                    if (window.innerWidth < 768) {
+                        setShowSidebar(false);
+                    }
+
                     setShowDeleteModal(true);
                   }}
 
@@ -283,25 +267,81 @@ function Assistant({ darkMode, setDarkMode }) {
 
         {!selectedChat ? (
 
-          <div className="text-center mt-20">
+    <div className="flex flex-col items-center justify-center h-full px-6">
 
-            <h1 className="text-2xl md:text-4xl font-bold">
-              🤖 AI Marketing Assistant
-            </h1>
+    <div
+      className={`w-24 h-24 rounded-full flex items-center justify-center text-5xl shadow-2xl ${
+        darkMode
+          ? "bg-gradient-to-br from-green-500 to-emerald-700"
+          : "bg-gradient-to-br from-green-100 to-green-300"
+      }`}
+    >
+      🤖
+    </div>
 
-            <p className="mt-3 text-sm md:text-base text-gray-500">
-                Ask me to generate:
+    <h1
+      className={`text-4xl md:text-5xl font-extrabold mt-8 ${
+        darkMode ? "text-white" : "text-gray-900"
+      }`}
+    >
+      AI Marketing Assistant
+    </h1>
 
-                • Product descriptions
-                • Marketing taglines
-                • Social media captions
-                • Promotional content
-                • Hashtags
+    <p
+      className={`mt-5 max-w-2xl text-lg leading-8 text-center ${
+        darkMode ? "text-gray-400" : "text-gray-600"
+      }`}
+    >
+      Tell me about your food product and I'll generate
+      professional product descriptions, promotional captions,
+      marketing taglines and social media hashtags in seconds.
+    </p>
 
-                🎤 You can also use voice input.
-            </p>
+    <div className="grid md:grid-cols-2 gap-6 mt-12 w-full max-w-4xl">
 
-          </div>
+      <div className="rounded-2xl bg-green-600 text-white p-6 shadow-xl hover:scale-105 transition">
+        <h3 className="text-xl font-bold mb-2">
+          📝 Product Descriptions
+        </h3>
+
+        <p className="text-green-100">
+          Generate attractive descriptions for your products.
+        </p>
+      </div>
+
+      <div className="rounded-2xl bg-green-600 text-white p-6 shadow-xl hover:scale-105 transition">
+        <h3 className="text-xl font-bold mb-2">
+          📱 Social Media Captions
+        </h3>
+
+        <p className="text-green-100">
+          Ready-to-post captions for Instagram and Facebook.
+        </p>
+      </div>
+
+      <div className="rounded-2xl bg-green-600 text-white p-6 shadow-xl hover:scale-105 transition">
+        <h3 className="text-xl font-bold mb-2">
+          🏷 Marketing Taglines
+        </h3>
+
+        <p className="text-green-100">
+          Catchy slogans that attract customers instantly.
+        </p>
+      </div>
+
+      <div className="rounded-2xl bg-green-600 text-white p-6 shadow-xl hover:scale-105 transition">
+        <h3 className="text-xl font-bold mb-2">
+          #️⃣ Smart Hashtags
+        </h3>
+
+        <p className="text-green-100">
+          AI-generated hashtags to improve online reach.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
 
         ) : (
 
@@ -318,30 +358,50 @@ function Assistant({ darkMode, setDarkMode }) {
                 }`}
               >
 
-            <div
-              className={`max-w-[75%] md:max-w-[65%] whitespace-pre-wrap rounded-xl px-4 py-3 shadow ${
-                msg.role === "user"
-                  ? "bg-green-600 text-white"
-                  : darkMode
-                  ? "bg-gray-800 text-white"
-                  : "bg-gray-200 text-black"
-              }`}
+      <div
+        className={`max-w-[80%] md:max-w-[70%] rounded-2xl px-5 py-4 shadow-lg whitespace-pre-wrap transition-all duration-300 ${
+          msg.role === "user"
+            ? "bg-gradient-to-r from-green-600 to-emerald-500 text-white"
+            : darkMode
+            ? "bg-gray-800 border border-gray-700 text-white"
+            : "bg-white border border-gray-200 text-gray-800"
+        }`}
+      >
+
+        {/* Sender Label */}
+
+        <div
+          className={`text-xs font-bold mb-3 ${
+            msg.role === "user"
+              ? "text-green-100"
+              : "text-green-600"
+          }`}
+        >
+          {msg.role === "user"
+            ? "👤 You"
+            : "🤖 AI Assistant"}
+        </div>
+
+        <p className="leading-7">
+          {msg.content}
+        </p>
+
+        {msg.role === "assistant" && (
+
+          <div className="mt-5 flex justify-end">
+
+            <button
+              onClick={() => handleCopy(msg.content)}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white transition"
             >
+              📋 Copy Response
+            </button>
 
-              <p>{msg.content}</p>
+          </div>
 
-              {msg.role === "assistant" && (
+        )}
 
-                <button
-                  onClick={() => handleCopy(msg.content)}
-                  className="mt-3 text-sm bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded"
-                >
-                  📋 Copy
-                </button>
-
-              )}
-
-            </div>
+      </div>
 
               </div>
 
@@ -353,7 +413,7 @@ function Assistant({ darkMode, setDarkMode }) {
                 className={`rounded-xl px-4 py-3 shadow ${
                   darkMode
                     ? "bg-gray-800"
-                    : "bg-gray-200"
+                    : "bg-white border border-gray-200"
                 }`}
               >
 

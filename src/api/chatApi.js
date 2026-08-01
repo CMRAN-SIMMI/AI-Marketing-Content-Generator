@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ChatAPI = axios.create({
-  baseURL: "http://localhost:5000/api/chat",
+  baseURL: `${import.meta.env.VITE_API_URL}/chat`,
 });
 
 ChatAPI.interceptors.request.use((config) => {

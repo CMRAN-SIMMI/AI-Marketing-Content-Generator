@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import Loader from "../components/ui/Loader";
-import Toast from "../components/ui/Toast";
+import { toast } from "react-hot-toast";
 import API from "../api/contentApi";
 import AI from "../api/aiApi";
 import { useLanguage } from "../context/LanguageContext";
@@ -17,7 +16,7 @@ function Generate({ darkMode, setDarkMode }) {
   
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState(null);
+ 
   const { t } = useLanguage();
 const handleGenerate = async () => {
   if (
@@ -25,10 +24,7 @@ const handleGenerate = async () => {
     !category.trim() ||
     !prompt.trim()
   ) {
-    setToast({
-      message: t.fillAllFields,
-      type: "error",
-    });
+    toast.error(t.fillAllFields);
     return;
   }
 
@@ -57,20 +53,15 @@ const handleGenerate = async () => {
     // 3️⃣ Show content on screen
     setOutput(generatedContent);
 
-    setToast({
-      message: t.generatedSuccess,
-      type: "success",
-    });
+    toast.success(t.generatedSuccess);
 
   } catch (error) {
     console.error(error);
 
-    setToast({
-      message:
-        error.response?.data?.message ||
-        t.generatedFailed,
-      type: "error",
-    });
+    toast.error(
+      error.response?.data?.message ||
+      t.generatedFailed
+    );
 
   } finally {
     setLoading(false);
@@ -91,9 +82,42 @@ const handleGenerate = async () => {
       />
 
       <div className="flex-grow flex flex-col items-center px-4 pt-10">
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          {t.GenerateContent}
+      <div className="text-center mb-10">
+
+        <h1
+          className={`text-5xl font-extrabold ${
+            darkMode ? "text-white" : "text-gray-900"
+          }`}
+        >
+          ✨ AI Marketing Generator
         </h1>
+
+        <p
+          className={`mt-4 text-lg max-w-2xl mx-auto ${
+            darkMode ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
+          Create engaging product descriptions, promotional content,
+          social media captions and marketing copy for your food
+          products using Artificial Intelligence.
+        </p>
+
+      </div>
+      <div
+  className={`w-full max-w-3xl rounded-3xl shadow-xl p-8 ${
+    darkMode
+      ? "bg-gray-900 border border-gray-800"
+      : "bg-white border border-gray-200"
+  }`}
+>
+
+<h2
+  className={`text-2xl font-bold mb-8 ${
+    darkMode ? "text-white" : "text-gray-900"
+  }`}
+>
+  📦 Product Information
+</h2>
 
         {/* Product Name */}
         <div className="w-full max-w-xl mb-4">
@@ -138,7 +162,7 @@ const handleGenerate = async () => {
             {t.generateContent}
           </Button>
         </div>
-
+</div>
         {/* Loader */}
         {loading && (
           <div className="mt-6 w-full max-w-xl">
@@ -158,30 +182,50 @@ const handleGenerate = async () => {
         {/* Output */}
         {output && !loading && (
           <div
-            className={`mt-8 w-full max-w-xl rounded-xl p-6 shadow-lg ${
+            className={`mt-10 w-full max-w-3xl rounded-3xl shadow-xl overflow-hidden ${
               darkMode
-                ? "bg-gray-900 border border-gray-700 text-white"
-                : "bg-white border border-gray-200 text-black"
+                ? "bg-gray-900 border border-gray-800"
+                : "bg-white border border-gray-200"
             }`}
           >
-            <h2 className="text-xl font-semibold mb-4">
-              ✨ {t.generatedContent}
-            </h2>
 
-            <div className="whitespace-pre-line">
+            {/* Header */}
+            <div
+              className={`px-6 py-4 flex justify-between items-center ${
+                darkMode
+                  ? "bg-gray-800"
+                  : "bg-green-50"
+              }`}
+            >
+              <h2 className="text-xl font-bold">
+                ✨ Generated Marketing Content
+              </h2>
+
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(output);
+                  toast.success("Content copied!");
+                }}
+                className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition"
+              >
+                📋 Copy
+              </button>
+            </div>
+
+            {/* AI Response */}
+            <div
+              className={`p-8 whitespace-pre-line leading-8 ${
+                darkMode
+                  ? "text-gray-300"
+                  : "text-gray-700"
+              }`}
+            >
               {output}
             </div>
+
           </div>
         )}
 
-        {/* Toast */}
-        {toast && (
-          <Toast
-            message={toast.message}
-            type={toast.type}
-            onClose={() => setToast(null)}
-          />
-        )}
       </div>
 
       <Footer />

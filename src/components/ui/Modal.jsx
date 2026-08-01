@@ -17,9 +17,9 @@ function Modal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
       <div
-        className={`p-6 rounded-lg shadow-lg w-96 ${
+        className={`w-full max-w-md p-6 rounded-xl shadow-2xl ${
           darkMode
             ? "bg-gray-800 text-white"
             : "bg-white text-black"

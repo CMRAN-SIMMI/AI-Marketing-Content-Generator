@@ -1,24 +1,40 @@
-# AI Marketing Content Generator for Food Processing Businesses
+# 🚀 AI Marketing Content Generator for Food Processing Businesses
 
-## Project Overview
+## 📌 Project Overview
 
-AI Marketing Content Generator is a full-stack web application designed to help food processing businesses create professional and engaging marketing content using Artificial Intelligence. The platform enables users to provide product information through structured forms, voice input, or an AI-powered chatbot and generates marketing materials tailored for digital platforms. The application now includes secure user authentication, Google OAuth login, AI-powered content generation using the Groq API, an AI marketing assistant, and complete content management features.
+AI Marketing Content Generator is a full-stack web application designed to help **food processing businesses** create professional and engaging marketing content using Artificial Intelligence.
 
-The goal of the project is to assist small and medium-scale food businesses in improving their online presence, reducing content creation effort, and enhancing product promotion through AI-driven solutions.
+The platform enables users to provide product information through structured forms, voice input, or an AI-powered chatbot and automatically generates marketing materials tailored for digital platforms.
+
+The application includes:
+
+- 🔐 Secure User Authentication
+- 🔑 Google OAuth Login
+- 🤖 AI-powered Content Generation using the Groq API
+- 💬 AI Marketing Assistant Chatbot
+- 📂 Content History Management
+- 🌙 Dark / Light Mode
+- 📱 Responsive User Interface
+
+The primary goal of this project is to help small and medium-scale food processing businesses improve their digital presence while reducing the effort required to create marketing content.
 
 ---
 
-# Problem Statement
+# 🎯 Problem Statement
 
-Many food processing businesses struggle to create effective marketing content for their products due to limited marketing expertise, time constraints, and lack of digital tools.
+Many food processing businesses struggle to create attractive and effective marketing content because of:
 
-This project aims to simplify content creation by leveraging Artificial Intelligence to automatically generate high-quality marketing content from basic product information.
+- Limited marketing expertise
+- Time constraints
+- Lack of digital marketing tools
+
+This project leverages Artificial Intelligence to automatically generate professional marketing content from simple product information.
 
 ---
 
-# Key Features
+# ✨ Key Features
 
-## Authentication
+## 🔐 Authentication
 
 - User Registration
 - User Login
@@ -26,7 +42,9 @@ This project aims to simplify content creation by leveraging Artificial Intellig
 - JWT Authentication
 - Protected Routes
 
-## Product Information Form
+---
+
+## 📝 Product Information Form
 
 Users can enter:
 
@@ -34,7 +52,9 @@ Users can enter:
 - Product Category
 - Marketing Prompt
 
-## AI Marketing Content Generation
+---
+
+## 🤖 AI Marketing Content Generation
 
 Generate:
 
@@ -42,60 +62,76 @@ Generate:
 - Promotional Content
 - Social Media Captions
 - Marketing Taglines
-- Hashtags
+- Marketing Hashtags
 
-## AI Marketing Assistant
+---
+
+## 💬 AI Marketing Assistant
 
 - AI-powered chatbot
 - Previous conversation history
-- Delete conversation history
-- New chat functionality
-- Voice input option
+- New Chat functionality
+- Delete conversations
+- Voice Input (Speech-to-Text)
 
-## Content History Management
+---
+
+## 📚 Content History
+
+Users can:
 
 - Save generated content
 - View previous content
-- Edit and regenerate marketing content
+- Edit content
+- Regenerate content using AI
 - Delete content
+- Copy generated content
 - Search content
 
-## Dashboard
+---
+
+## 📊 Dashboard
 
 - User-specific dashboard
-- Protected using JWT authentication
+- Protected using JWT Authentication
 
-## User Experience
+---
+
+## 🎨 User Experience
 
 - Responsive Design
+- Dark / Light Mode
 - Toast Notifications
 - Loading Indicators
 - Delete Confirmation Modals
 - Error Boundary
-- Dark / Light Mode
----
-
-# System Workflow
-
-1. User enters product details through form, chatbot, or voice input.
-2. Product information is processed by the backend.
-3. Marketing content is generated based on the provided product information.
-4. Generated content is displayed to the user.
-5. The generated content is securely stored in MongoDB Atlas for the authenticated user and can later be viewed, edited, regenerated, or deleted from the History page.
 
 ---
 
-# Expected Outcomes
+# ⚙️ System Workflow
 
-* Faster content creation process
-* Improved digital marketing support for food businesses
-* User-friendly AI-powered marketing assistant
-* Enhanced product visibility through optimized marketing content
-* Persistent cloud-based storage of generated marketing content
+1. User logs into the application.
+2. Product information is entered using the Generate page, chatbot, or voice input.
+3. The backend sends the prompt to the Groq API.
+4. AI generates marketing content.
+5. Generated content is displayed to the user.
+6. Content is securely stored in MongoDB Atlas.
+7. Users can later edit, regenerate, copy, or delete the generated content.
 
 ---
 
-# Technologies Used
+# 🎯 Expected Outcomes
+
+- Faster marketing content creation
+- AI-assisted product promotion
+- Improved digital marketing support
+- User-friendly AI assistant
+- Secure cloud-based storage
+- Better online visibility for food businesses
+
+---
+
+# 🛠 Technologies Used
 
 ## Frontend
 
@@ -103,6 +139,10 @@ Generate:
 - Tailwind CSS
 - Axios
 - React Router DOM
+- React Hot Toast
+- Lucide React Icons
+
+---
 
 ## Backend
 
@@ -110,100 +150,126 @@ Generate:
 - Express.js
 - MongoDB Atlas
 - Mongoose
-- JWT
+- JWT Authentication
 - Passport.js
 - Google OAuth
 
-## AI
+---
 
-- Groq API
+## Artificial Intelligence
 
-## Other
+- Groq API (LLM)
+
+---
+
+## Other Libraries
 
 - CORS
 - Dotenv
 
 ---
 
-# Database Choice
+# 🗄 Database
 
-This project uses **MongoDB Atlas** as its cloud-hosted NoSQL database.
+The application uses **MongoDB Atlas** as its cloud-hosted NoSQL database.
 
-MongoDB Atlas was chosen because marketing content is naturally document-oriented and flexible. It efficiently stores product details, prompts, generated marketing content, hashtags, and timestamps without requiring a rigid relational schema.
+MongoDB Atlas was selected because marketing content is document-oriented and flexible, making it ideal for storing prompts, generated content, users, and chat conversations.
 
 ---
 
+# 📑 Database Collections
+
 ## Content Collection
 
-The application stores marketing content in a MongoDB collection named **Content**.
+| Field | Type | Description |
+|------|------|-------------|
+| _id | ObjectId | Unique identifier |
+| user | ObjectId | Authenticated user |
+| productName | String | Product name |
+| category | String | Product category |
+| prompt | String | User prompt |
+| generatedContent | String | AI-generated content |
+| hashtags | Array<String> | Generated hashtags |
+| createdAt | Date | Created timestamp |
+| updatedAt | Date | Updated timestamp |
 
-| Field            | Type          | Description          |
-| ---------------- | ------------- | -------------------- |
-| _id              | ObjectId      | Unique identifier    |
-| user             | ObjectId      | Authenticated user   |
-| productName      | String        | Product name         |
-| category         | String        | Product category     |
-| prompt           | String        | Marketing prompt     |
-| generatedContent | String        | AI generated content |
-| hashtags         | Array<String> | Generated hashtags   |
-| createdAt        | Date          | Created timestamp    |
-| updatedAt        | Date          | Updated timestamp    |
+---
 
+## Chat Collection
 
-### Schema Diagram
+| Field | Type | Description |
+|------|------|-------------|
+| _id | ObjectId | Chat ID |
+| user | ObjectId | Authenticated user |
+| title | String | Chat title |
+| messages | Array | User & AI conversation |
+| createdAt | Date | Created timestamp |
+| updatedAt | Date | Updated timestamp |
 
-> **Week 5 Schema Diagram**
+---
+
+## User Collection
+
+Stores:
+
+- User Information
+- Authentication Details
+- Google OAuth Information
+
+---
+
+## Schema Diagram
 
 ![Schema Diagram](./assets/W5_SchemaDiagram_TBI-26100863.png)
 
 ---
 
-# API Endpoints
+# 🔗 API Endpoints
 
 ## Authentication
 
 | Method | Endpoint |
-|--------|----------|
-| POST | /api/auth/register |
-| POST | /api/auth/login |
-| GET | /api/auth/google |
-| GET | /api/auth/google/callback |
+|---------|----------|
+| POST | `/api/auth/register` |
+| POST | `/api/auth/login` |
+| GET | `/api/auth/google` |
+| GET | `/api/auth/google/callback` |
 
 ---
 
 ## Marketing Content
 
 | Method | Endpoint |
-|--------|----------|
-| GET | /api/content |
-| GET | /api/content/:id |
-| POST | /api/content |
-| PUT | /api/content/:id |
-| DELETE | /api/content/:id |
+|---------|----------|
+| GET | `/api/content` |
+| GET | `/api/content/:id` |
+| POST | `/api/content` |
+| PUT | `/api/content/:id` |
+| DELETE | `/api/content/:id` |
 
 ---
 
 ## AI
 
 | Method | Endpoint |
-|--------|----------|
-| POST | /api/ai/generate |
+|---------|----------|
+| POST | `/api/ai/generate` |
 
 ---
 
 ## AI Assistant
 
 | Method | Endpoint |
-|--------|----------|
-| GET | /api/chat |
-| POST | /api/chat |
-| DELETE | /api/chat |
+|---------|----------|
+| GET | `/api/chat` |
+| POST | `/api/chat/message` |
+| DELETE | `/api/chat/:id` |
 
 ---
 
-# Environment Variables
+# 🔐 Environment Variables
 
-Create a `.env` file inside the backend folder.
+Create a `.env` file inside the **backend** folder.
 
 ```env
 PORT=5000
@@ -218,12 +284,12 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 
 GROQ_API_KEY=your_groq_api_key
 ```
----
-
-# How to Run the Project Locally
 
 ---
-## 1. Clone the Repository
+
+# 💻 Installation
+
+## 1. Clone Repository
 
 ```bash
 git clone https://github.com/CMRAN-SIMMI/AI-Marketing-Content-Generator.git
@@ -231,47 +297,15 @@ git clone https://github.com/CMRAN-SIMMI/AI-Marketing-Content-Generator.git
 
 ---
 
-## 2. Navigate to the Backend Folder
+## 2. Backend Setup
 
 ```bash
 cd backend
-```
-
----
-
-## 3. Install Backend Dependencies
-
-```bash
 npm install
-```
-
----
-
-## 4. Configure Environment Variables
-
-Create a `.env` file inside the backend folder.
-
-```env
-PORT=5000
-
-MONGO_URI=your_mongodb_connection_string
-
-JWT_SECRET=your_jwt_secret
-
-GOOGLE_CLIENT_ID=your_google_client_id
-
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-
-GROQ_API_KEY=your_groq_api_key
----
-
-## 5. Start the Backend Server
-
-```bash
 npm run dev
 ```
 
-Backend runs at:
+Backend runs on:
 
 ```
 http://localhost:5000
@@ -279,40 +313,32 @@ http://localhost:5000
 
 ---
 
-## 6. Navigate to the Frontend 
+## 3. Frontend Setup
 
-Open another terminal.
-
----
-
-## 7. Install Frontend Dependencies
+Open another terminal in the project root.
 
 ```bash
 npm install
-```
-
----
-
-## 8. Start the Frontend
-
-```bash
 npm run dev
 ```
 
-Frontend runs at:
+Frontend runs on:
 
 ```
 http://localhost:5173
 ```
 
-# Build Project
+---
+
+## Build Project
 
 ```bash
 npm run build
 ```
 
 ---
-# Project Structure
+
+# 📁 Project Structure
 
 ```text
 AI-Marketing-Content-Generator
@@ -324,32 +350,47 @@ AI-Marketing-Content-Generator
 │   ├── models
 │   ├── routes
 │   ├── services
+│   ├── utils
 │   └── server.js
-│
-├── src
+|
+│── public
+|
+│── src
 │   ├── api
 │   ├── assets
 │   ├── components
+|   |   └── ui
+│   ├── context
 │   ├── pages
 │   ├── App.jsx
-│   └── main.jsx
+│   ├── main.jsx
+|   └── index.css
 │
-└── README.md
+├── package.json
+├── vite.config.js
+├── README.md
+└── .env.example
 ```
----
-
-
-# Future Enhancements
-
-
-* Multi-language Marketing Content Generation
-* Image Generation Support
-* Export Generated Content as PDF
 
 ---
 
-# Author
+# 🚀 Future Enhancements
+
+- 🌐 Multi-language Content Generation
+- 🖼 AI Image Generation
+- 📄 Export Generated Content as PDF
+- 📊 Content Analytics Dashboard
+- 📅 Marketing Campaign Planner
+- 📈 AI Content Performance Suggestions
+
+---
+
+# 👨‍💻 Author
 
 **Simran**
 
 AI-Assisted Full Stack Web Development Internship Project
+
+---
+
+⭐ If you found this project helpful, consider giving it a **Star** on GitHub.

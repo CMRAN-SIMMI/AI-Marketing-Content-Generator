@@ -4,8 +4,9 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import API from "../api/contentApi";
 import Modal from "../components/ui/Modal";
-import Toast from "../components/ui/Toast";
+import { toast } from "react-hot-toast";
 import AI from "../api/aiApi";
+import { Pencil, Trash2, CalendarDays, Copy } from "lucide-react";
 
 function History({ darkMode, setDarkMode }) {
   const [contents, setContents] = useState([]);
@@ -19,11 +20,6 @@ function History({ darkMode, setDarkMode }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [contentToDelete, setContentToDelete] = useState(null);
 
-  const [toast, setToast] = useState({
-    show: false,
-    message: "",
-    type: "success",
-  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,11 +47,7 @@ function History({ darkMode, setDarkMode }) {
           )
         );
 
-        setToast({
-          show: true,
-          message: "Content deleted successfully!",
-          type: "success",
-        });
+        toast.success("Content deleted successfully!");
 
         setShowDeleteModal(false);
         setContentToDelete(null);
@@ -63,11 +55,7 @@ function History({ darkMode, setDarkMode }) {
       } catch (err) {
         console.error(err);
 
-        setToast({
-          show: true,
-          message: "Failed to delete content.",
-          type: "error",
-        });
+        toast.error("Failed to delete content.");
       }
     };
     const handleEdit = (item) => {
@@ -113,25 +101,17 @@ function History({ darkMode, setDarkMode }) {
 
         setEditing(null);
 
-        setToast({
-          show: true,
-          message: "Content regenerated successfully!",
-          type: "success",
-        });
+      toast.success("Content updated successfully!");
 
       } catch (err) {
         console.error(err);
 
-        setToast({
-          show: true,
-          message: "Failed to update content.",
-          type: "error",
-        });
+        toast.error("Failed to update content.");
       }
     };
   return (
     <div
-      className={`min-h-screen ${
+      className={`min-h-screen flex flex-col ${
         darkMode
           ? "bg-gray-950 text-white"
           : "bg-white text-black"
@@ -142,10 +122,30 @@ function History({ darkMode, setDarkMode }) {
         setDarkMode={setDarkMode}
       />
 
-      <div className="max-w-5xl mx-auto py-10 px-4">
-        <h1 className="text-4xl font-bold mb-8">
-          Content History
-        </h1>
+      <div className="flex-1 max-w-5xl mx-auto w-full py-10 px-4">
+<div className="mb-10">
+
+  <h1
+    className={`text-4xl font-bold ${
+      darkMode
+        ? "text-white"
+        : "text-gray-900"
+    }`}
+  >
+    📚 Content History
+  </h1>
+
+  <p
+    className={`mt-2 ${
+      darkMode
+        ? "text-gray-400"
+        : "text-gray-600"
+    }`}
+  >
+    View, edit and manage all your AI-generated marketing content.
+  </p>
+
+</div>
 
       {contents.length === 0 ? (
         <div
@@ -177,49 +177,150 @@ function History({ darkMode, setDarkMode }) {
         </div>
       ) : (
           contents.map((item) => (
-            <div
-              key={item._id}
-              className={`p-5 mb-5 rounded-lg ${
-                darkMode
-                  ? "bg-gray-800"
-                  : "bg-gray-100"
-              }`}
-            >
-              <h2 className="text-2xl font-bold">
-                {item.productName}
-              </h2>
+           <div
+  key={item._id}
+  className={`rounded-2xl shadow-lg hover:shadow-2xl mb-8 overflow-hidden transition-all duration-300 hover:scale-[1.01] ${
+    darkMode
+      ? "bg-gray-900/80 border border-gray-800"
+      : "bg-white/90 border border-gray-200 backdrop-blur-sm"
+  }`}
+>
+  {/* Header */}
 
-              <p>
-                <strong>Category:</strong> {item.category}
-              </p>
+<div className="flex justify-between items-start mb-6">
 
-              <p>
-                <strong>Prompt:</strong> {item.prompt}
-              </p>
+  <div>
 
-              <p className="whitespace-pre-line mt-3">
-                {item.generatedContent}
-              </p>
-              <div className="mt-4 flex gap-3">
-              <button
-                onClick={() => handleEdit(item)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-              >
-                Edit
-              </button>
+    <h2
+      className={`text-2xl font-bold ${
+        darkMode ? "text-white" : "text-gray-900"
+      }`}
+    >
+      🍽 {item.productName}
+    </h2>
 
-              <button
-              onClick={() => {
-                setContentToDelete(item._id);
-                setShowDeleteModal(true);
-              }}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
-              >
-                Delete
-              </button>
-            </div>
+    <p
+      className={`mt-2 text-sm ${
+        darkMode ? "text-gray-400" : "text-gray-500"
+      }`}
+    >
+      AI Generated Marketing Content
+    </p>
 
-            </div>
+  </div>
+
+  <span
+    className="bg-green-100 text-green-700 px-4 py-1 rounded-full text-sm font-semibold"
+  >
+    {item.category}
+  </span>
+
+</div>
+
+  <div className="p-6">
+
+    {/* Prompt */}
+
+    <div className="mb-6">
+
+      <h3 className="font-bold text-lg mb-2">
+        <div className="flex items-center gap-2 mb-2">
+  <span className="text-xl">📝</span>
+  <h3 className="font-semibold text-lg">Prompt</h3>
+</div>
+      </h3>
+
+      <p
+        className={`${
+          darkMode
+            ? "text-gray-300"
+            : "text-gray-600"
+        }`}
+      >
+        {item.prompt}
+      </p>
+
+    </div>
+
+    {/* Generated */}
+
+{/* Generated */}
+
+<div>
+
+  <div className="flex items-center gap-2 mb-2">
+    <span className="text-xl">✨</span>
+    <h3 className="font-semibold text-lg">
+      AI Generated Content
+    </h3>
+  </div>
+
+  <p
+    className={`whitespace-pre-line leading-7 ${
+      darkMode
+        ? "text-gray-300"
+        : "text-gray-700"
+    }`}
+  >
+    {item.generatedContent}
+  </p>
+
+  {/* Copy Button */}
+
+<button
+  onClick={() => {
+    navigator.clipboard.writeText(item.generatedContent);
+    toast.success("Content copied successfully!");
+  }}
+  className="flex items-center gap-2 mt-5 text-green-600 hover:text-green-700 font-medium"
+>
+  <Copy size={18} />
+  Copy Content
+</button>
+
+</div>
+
+    {/* Footer */}
+
+    <div
+  className={`flex justify-between items-center mt-8 pt-6 border-t ${
+    darkMode ? "border-gray-700" : "border-gray-200"
+  }`}
+>
+  <span
+    className={`text-sm ${
+      darkMode ? "text-gray-400" : "text-gray-500"
+    }`}
+  >
+    AI Marketing Content
+  </span>
+
+  <div className="flex gap-3">
+
+<button
+  onClick={() => handleEdit(item)}
+  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-xl text-white font-medium"
+>
+  <Pencil size={18} />
+  Edit
+</button>
+
+<button
+  onClick={() => {
+    setContentToDelete(item._id);
+    setShowDeleteModal(true);
+  }}
+  className="flex items-center gap-2 bg-red-600 hover:bg-red-700 transition px-4 py-2 rounded-xl text-white font-medium"
+>
+  <Trash2 size={18} />
+  Delete
+</button>
+
+    </div>
+    </div>
+  </div>
+
+</div>
           ))
         )}
       </div>
@@ -281,6 +382,27 @@ function History({ darkMode, setDarkMode }) {
                 }`}
               />
             </div>
+            <hr
+              className={`mb-6 ${
+                darkMode ? "border-gray-700" : "border-gray-200"
+              }`}
+            />
+            <div
+              className={`flex items-center gap-2 mt-3 text-sm ${
+                darkMode ? "text-gray-400" : "text-gray-500"
+              }`}
+            >
+            {editing?.createdAt && (
+              <div
+                className={`flex items-center gap-2 mt-3 text-sm ${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
+                <CalendarDays size={16} />
+                {new Date(editing.createdAt).toLocaleDateString()}
+              </div>
+            )}
+            </div>
 
             {/* Prompt */}
             <div className="mb-4">
@@ -306,6 +428,7 @@ function History({ darkMode, setDarkMode }) {
             </div>
 
             {/* Generated Content */}
+            
             <div className="mb-6">
               <label className="block font-semibold mb-2">
                 Generated Content
@@ -346,6 +469,8 @@ function History({ darkMode, setDarkMode }) {
           </div>
         </div>
       )}
+
+      
       <Modal
         isOpen={showDeleteModal}
         title="Delete Content"
@@ -376,18 +501,7 @@ function History({ darkMode, setDarkMode }) {
           </button>
         </div>
       </Modal>
-      {toast.show && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() =>
-            setToast({
-              ...toast,
-              show: false,
-            })
-          }
-        />
-      )}
+     
       <Footer />
     </div>
   );

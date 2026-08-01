@@ -29,9 +29,9 @@ const hi = {
 
   fillAllFields: "⚠ कृपया सभी फ़ील्ड भरें",
 
-  generatedSuccess: "✅ सामग्री सफलतापूर्वक तैयार हो गई",
+  generatedSuccess: "सामग्री सफलतापूर्वक तैयार हो गई",
 
-  generatedFailed: "❌ सामग्री तैयार नहीं हो सकी",
+  generatedFailed: " सामग्री तैयार नहीं हो सकी",
 
   noContent: "अभी तक कोई सामग्री उपलब्ध नहीं है",
 

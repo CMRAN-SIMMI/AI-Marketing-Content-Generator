@@ -29,8 +29,8 @@ const en = {
 
   fillAllFields: "⚠ Please fill all fields",
 
-  generatedSuccess: "✅ AI Content Generated Successfully",
-  generatedFailed: "❌ Failed to generate AI content",
+  generatedSuccess: "AI Content Generated Successfully",
+  generatedFailed: " Failed to generate AI content",
 
   noContent: "No Marketing Content Yet",
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const AI = axios.create({
-  baseURL: "http://localhost:5000/api/ai",
+  baseURL: `${import.meta.env.VITE_API_URL}/ai`,
 });
 
 // Automatically attach JWT
