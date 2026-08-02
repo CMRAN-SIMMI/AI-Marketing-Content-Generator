@@ -56,7 +56,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/login",
+    failureRedirect: `${process.env.FRONTEND_URL}/login`,
     session: true,
   }),
   (req, res) => {
@@ -70,9 +70,9 @@ router.get(
       }
     );
 
-    res.redirect(
-      `http://localhost:5173/oauth-success?token=${token}`
-    );
+res.redirect(
+  `${process.env.FRONTEND_URL}/oauth-success?token=${token}`
+);
   }
 );
 module.exports = router;
