@@ -1,5 +1,11 @@
 # 🚀 AI Marketing Content Generator for Food Processing Businesses
 
+## 🌐 Live Demo
+
+**Frontend:** https://ai-marketing-content-generator-8jqq-eight.vercel.app
+
+**Backend:** https://ai-marketing-content-generator.onrender.com
+
 ## 📌 Project Overview
 
 AI Marketing Content Generator is a full-stack web application designed to help **food processing businesses** create professional and engaging marketing content using Artificial Intelligence.
@@ -315,9 +321,8 @@ http://localhost:5000
 
 ## 3. Frontend Setup
 
-Open another terminal in the project root.
-
 ```bash
+cd frontend
 npm install
 npm run dev
 ```
@@ -333,10 +338,55 @@ http://localhost:5173
 ## Build Project
 
 ```bash
+cd frontend
 npm run build
 ```
 
 ---
+
+# 🌐 Live Deployment
+
+## Live Frontend
+https://ai-marketing-content-generator-8jqq-eight.vercel.app
+
+## Live Backend
+https://ai-marketing-content-generator.onrender.com
+
+## Tech Stack
+
+### Frontend
+- React.js
+- Vite
+- Tailwind CSS
+- Axios
+- React Router
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB Atlas
+- JWT Authentication
+- Google OAuth
+- Passport.js
+
+### AI
+- Groq API (LLM)
+
+## Features
+- User Authentication
+- Google OAuth Login
+- AI Marketing Content Generator
+- AI Chat Assistant
+- Content History
+- Protected Routes
+- Dark Mode
+- Responsive Design
+
+## Known Limitations (Free Tier)
+
+- Render free tier spins down after inactivity.
+- First request after inactivity may take 30–60 seconds.
+- AI response time depends on Gemini API response speed.
 
 # 📁 Project Structure
 
@@ -346,30 +396,34 @@ AI-Marketing-Content-Generator
 ├── backend
 │   ├── config
 │   ├── controllers
+│   ├── data
 │   ├── middleware
 │   ├── models
 │   ├── routes
 │   ├── services
-│   ├── utils
+│   ├── package.json
+│   ├── .env.example
 │   └── server.js
-|
-│── public
-|
-│── src
-│   ├── api
-│   ├── assets
-│   ├── components
-|   |   └── ui
-│   ├── context
-│   ├── pages
-│   ├── App.jsx
-│   ├── main.jsx
-|   └── index.css
 │
-├── package.json
-├── vite.config.js
-├── README.md
-└── .env.example
+├── frontend
+│   ├── public
+│   ├── src
+│   │   ├── api
+│   │   ├── assets
+│   │   ├── components
+│   │   │   └── ui
+│   │   ├── context
+│   │   ├── pages
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── package.json
+│   ├── vite.config.js
+│   └── vercel.json
+│
+├── .gitignore
+├── PROMPTS.md
+└── README.md
 ```
 
 ---
