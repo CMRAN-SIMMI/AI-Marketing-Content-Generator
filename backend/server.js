@@ -27,6 +27,7 @@ mongoose.connect(process.env.MONGO_URI)
     console.log(err);
   });
 const app = express();
+app.set("trust proxy", 1);
 
 // Middleware
 app.use(
@@ -44,7 +45,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
     },
   })
