@@ -1,7 +1,12 @@
 const { generateMarketingContent } = require("../services/groqService");
 const generateContent = async (req, res) => {
   try {
-    const { productName, category, prompt } = req.body;
+      const {
+      productName,
+      category,
+      prompt,
+      language = "en",
+    } = req.body;
 
     // Validation
     if (!productName || !category || !prompt) {
@@ -11,11 +16,12 @@ const generateContent = async (req, res) => {
       });
     }
 
-    // Call Gemini
+    // Call the Groq service to generate content
     const aiResponse = await generateMarketingContent(
       productName,
       category,
-      prompt
+      prompt,
+      language
     );
 
     res.status(200).json({

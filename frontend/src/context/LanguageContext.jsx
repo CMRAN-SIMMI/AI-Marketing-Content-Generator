@@ -7,14 +7,14 @@ const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState(
-    localStorage.getItem("language") || "English"
+    localStorage.getItem("language") || "en"
   );
 
   useEffect(() => {
     localStorage.setItem("language", language);
   }, [language]);
 
-  const translations = language === "Hindi" ? hi : en;
+  const translations = language === "hi" ? hi : en;
 
   return (
     <LanguageContext.Provider

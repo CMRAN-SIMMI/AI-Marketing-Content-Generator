@@ -76,8 +76,8 @@ function Navbar({ darkMode, setDarkMode }) {
                 : "bg-white border-gray-300 text-black"
             }`}
           >
-            <option value="English">🇺🇸 English</option>
-            <option value="Hindi">🇮🇳 हिन्दी</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="hi">🇮🇳 हिन्दी</option>
           </select>
 
           <button
@@ -177,8 +177,8 @@ function Navbar({ darkMode, setDarkMode }) {
                 : "bg-white border-gray-300 text-black"
             }`}
           >
-            <option value="English">🇺🇸 English</option>
-            <option value="Hindi">🇮🇳 हिन्दी</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="hi">🇮🇳 हिन्दी</option>
           </select>
 
           <button

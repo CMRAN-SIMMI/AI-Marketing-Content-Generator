@@ -7,16 +7,37 @@ const groq = new Groq({
 const generateMarketingContent = async (
   productName,
   category,
-  prompt
+  prompt,
+  language = "en"
 ) => {
   try {
+    const languageInstruction =
+      language === "hi"
+        ? `
+Generate the ENTIRE response in Hindi.
+
+Rules:
+- Translate all headings to Hindi.
+- Translate product names if a common Hindi name exists.
+- Use Hindi hashtags whenever possible.
+- Do not mix English words except for brand names.
+- Write naturally for an Indian audience.
+`
+        : `
+Generate the ENTIRE response in English.
+`;
+
     const completion = await groq.chat.completions.create({
       model: "llama-3.1-8b-instant",
+
       messages: [
         {
           role: "system",
-          content:
-            "You are an expert marketing content writer for food processing businesses.",
+          content: `
+You are an expert marketing content writer for food processing businesses.
+
+${languageInstruction}
+`,
         },
         {
           role: "user",
@@ -29,6 +50,7 @@ Task:
 ${prompt}
 
 Generate:
+
 1. Product Description
 2. Promotional Content
 3. Social Media Caption
@@ -37,6 +59,7 @@ Generate:
 `,
         },
       ],
+
       temperature: 0.7,
       max_tokens: 600,
     });
@@ -48,34 +71,53 @@ Generate:
   }
 };
 
-const generateChatResponse = async (message) => {
+const generateChatResponse = async (
+  message,
+  language = "en"
+) => {
   try {
-    const completion = await groq.chat.completions.create({
-      model: "llama-3.1-8b-instant",
+    const languageInstruction =
+  language === "hi"
+    ? `
+    You must reply ONLY in Hindi.
 
-      messages: [
-        {
+    Rules:
+    - Use natural and professional Hindi.
+    - Do not mix English unless it is a brand name.
+    - If the user asks in Hindi, answer in Hindi.
+    - Keep the conversation friendly and conversational.
+    `
+        : `
+    You must reply ONLY in English.
+    `;
+        const completion = await groq.chat.completions.create({
+          model: "llama-3.1-8b-instant",
+
+          messages: [
+          {
           role: "system",
           content: `
-You are an AI Marketing Assistant for food processing businesses.
+        You are an AI Marketing Assistant for food processing businesses.
 
-Help users naturally with:
+        ${languageInstruction}
 
-- Product descriptions
-- Marketing ideas
-- Taglines
-- Social media captions
-- Branding
-- Advertising
-- Hashtags
-- Food product promotion
+        Help users naturally with:
 
-Reply conversationally.
+        - Product descriptions
+        - Marketing ideas
+        - Taglines
+        - Social media captions
+        - Branding
+        - Advertising
+        - Hashtags
+        - Food product promotion
 
-Only answer what the user asks.
+        Reply conversationally.
 
-Do NOT generate all sections unless the user specifically requests them.
-          `,
+        Only answer what the user asks.
+
+        Do NOT generate all sections unless the user specifically requests them.
+        `,
         },
 
         {

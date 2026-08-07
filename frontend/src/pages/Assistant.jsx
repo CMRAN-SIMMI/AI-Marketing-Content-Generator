@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ChatAPI from "../api/chatApi";
 import Modal from "../components/ui/Modal";
+import { useLanguage } from "../context/LanguageContext";
 
 function Assistant({ darkMode, setDarkMode }) {
   const [chats, setChats] = useState([]);
@@ -19,6 +20,7 @@ function Assistant({ darkMode, setDarkMode }) {
   useEffect(() => {
     fetchChats();
   }, []);
+  const { language } = useLanguage();
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -56,6 +58,7 @@ function Assistant({ darkMode, setDarkMode }) {
       const response = await ChatAPI.post("/message", {
         chatId: selectedChat?._id,
         message,
+        language,
       });
 
       setSelectedChat(response.data.data);
@@ -90,7 +93,10 @@ function Assistant({ darkMode, setDarkMode }) {
 
     const recognition = new window.webkitSpeechRecognition();
 
-    recognition.lang = "en-US";
+    recognition.lang =
+  language === "hi"
+    ? "hi-IN"
+    : "en-US";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 

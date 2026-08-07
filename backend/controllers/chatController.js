@@ -74,8 +74,12 @@ const deleteChat = async (req, res) => {
 };
 
 const sendMessage = async (req, res) => {
-  try {
-    const { chatId, message } = req.body;
+      try {
+        const {
+      chatId,
+      message,
+      language = "en",
+    } = req.body;
 
     if (!message) {
       return res.status(400).json({
@@ -116,7 +120,10 @@ const sendMessage = async (req, res) => {
     });
 
     // Ask Groq
-    const aiReply = await generateChatResponse(message);
+    const aiReply = await generateChatResponse(
+    message,
+    language
+  );
 
     // Save AI reply
     chat.messages.push({

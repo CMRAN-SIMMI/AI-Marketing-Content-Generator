@@ -17,7 +17,7 @@ function Generate({ darkMode, setDarkMode }) {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
  
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 const handleGenerate = async () => {
   if (
     !productName.trim() ||
@@ -37,6 +37,7 @@ const handleGenerate = async () => {
       productName,
       category,
       prompt,
+      language,
     });
 
     const generatedContent =
