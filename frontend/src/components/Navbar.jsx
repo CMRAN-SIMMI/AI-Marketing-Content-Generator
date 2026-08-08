@@ -1,6 +1,18 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaBars,
+  FaTimes,
+  FaHome,
+  FaRobot,
+  FaHistory,
+} from "react-icons/fa";
+
+import { MdDashboard } from "react-icons/md";
+
+import { HiSparkles } from "react-icons/hi2";
+
+import { FiChevronRight } from "react-icons/fi";
 import { useLanguage } from "../context/LanguageContext";
 
 function Navbar({ darkMode, setDarkMode }) {
@@ -158,52 +170,237 @@ const user = JSON.parse(localStorage.getItem("user"));
 
       {/* Mobile Dropdown */}
       {isOpen && (
+      <div
+        className={`fixed inset-0 z-50 md:hidden ${
+          darkMode
+            ? "bg-gray-950 text-white"
+            : "bg-white text-black"
+        }`}
+      >
+        {/* Header */}
         <div
-          className={`md:hidden flex flex-col items-center gap-4 pb-4 border-t w-full ${
+          className={`flex items-center justify-between px-5 py-4 border-b ${
             darkMode
-              ? "bg-gray-900 border-gray-700"
-              : "bg-white border-gray-200"
+              ? "border-gray-800"
+              : "border-gray-200"
           }`}
         >
-          <NavLink
-            to="/"
-            className={linkStyle}
-            onClick={() => setIsOpen(false)}
-          >
-            {t.home}
-          </NavLink>
+          <h2 className="text-xl font-bold text-green-600">
+            AI Marketing
+          </h2>
 
-          <NavLink
-            to="/dashboard"
-            className={linkStyle}
+          <button
             onClick={() => setIsOpen(false)}
+            className="text-2xl"
           >
-            {t.dashboard}
-          </NavLink>
+            <FaTimes />
+          </button>
+        </div>
 
-          <NavLink
-            to="/generate"
-            className={linkStyle}
-            onClick={() => setIsOpen(false)}
-          >
-            {t.generate}
-          </NavLink>
+        <div className="overflow-y-auto h-[calc(100vh-72px)] px-5 py-5 space-y-5">
 
-          <NavLink
-            to="/assistant"
-            className={linkStyle}
-            onClick={() => setIsOpen(false)}
-          >
-            {t.assistant}
-          </NavLink>
+          {/* Profile Card */}
+          {isLoggedIn && (
+            <div
+              className={`rounded-2xl border p-4 flex items-center gap-4 ${
+                darkMode
+                  ? "bg-gray-900 border-gray-700"
+                  : "bg-gray-100 border-gray-300"
+              }`}
+            >
+              <div className="w-12 h-12 rounded-full bg-green-600 text-white flex items-center justify-center text-lg font-bold">
+                {user?.name?.charAt(0).toUpperCase()}
+              </div>
 
-          <NavLink
-            to="/history"
-            className={linkStyle}
-            onClick={() => setIsOpen(false)}
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold truncate">
+                  {user?.name}
+                </p>
+
+                <p className="text-sm text-gray-500 truncate">
+                  {user?.email}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Navigation */}
+
+          <div className="space-y-2">
+
+            <NavLink
+              to="/"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center justify-between rounded-xl px-4 py-3 transition ${
+                  isActive
+                    ? "bg-green-500/10 text-green-600 font-semibold"
+                    : darkMode
+                    ? "hover:bg-gray-800"
+                    : "hover:bg-gray-100"
+                }`
+              }
+            >
+              <div className="flex items-center gap-3">
+                <FaHome />
+                <span>{t.home}</span>
+              </div>
+
+              <FiChevronRight />
+            </NavLink>
+
+            <NavLink
+              to="/dashboard"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center justify-between rounded-xl px-4 py-3 transition ${
+                  isActive
+                    ? "bg-green-500/10 text-green-600 font-semibold"
+                    : darkMode
+                    ? "hover:bg-gray-800"
+                    : "hover:bg-gray-100"
+                }`
+              }
+            >
+              <div className="flex items-center gap-3">
+                <MdDashboard />
+                <span>{t.dashboard}</span>
+              </div>
+
+              <FiChevronRight />
+            </NavLink>
+
+            <NavLink
+              to="/generate"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center justify-between rounded-xl px-4 py-3 transition ${
+                  isActive
+                    ? "bg-green-500/10 text-green-600 font-semibold"
+                    : darkMode
+                    ? "hover:bg-gray-800"
+                    : "hover:bg-gray-100"
+                }`
+              }
+            >
+              <div className="flex items-center gap-3">
+                <HiSparkles />
+                <span>{t.generate}</span>
+              </div>
+
+              <FiChevronRight />
+            </NavLink>
+
+            <NavLink
+              to="/assistant"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center justify-between rounded-xl px-4 py-3 transition ${
+                  isActive
+                    ? "bg-green-500/10 text-green-600 font-semibold"
+                    : darkMode
+                    ? "hover:bg-gray-800"
+                    : "hover:bg-gray-100"
+                }`
+              }
+            >
+              <div className="flex items-center gap-3">
+                <FaRobot />
+                <span>{t.assistant}</span>
+              </div>
+
+              <FiChevronRight />
+            </NavLink>
+
+            <NavLink
+              to="/history"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center justify-between rounded-xl px-4 py-3 transition ${
+                  isActive
+                    ? "bg-green-500/10 text-green-600 font-semibold"
+                    : darkMode
+                    ? "hover:bg-gray-800"
+                    : "hover:bg-gray-100"
+                }`
+              }
+            >
+              <div className="flex items-center gap-3">
+                <FaHistory />
+                <span>{t.history}</span>
+              </div>
+
+              <FiChevronRight />
+            </NavLink>
+
+          </div>
+
+          {/* Language */}
+
+         <div
+            className={`flex items-center justify-between rounded-xl border px-4 py-4 ${
+              darkMode
+                ? "border-gray-700 bg-gray-900"
+                : "border-gray-300 bg-white"
+            }`}
           >
-            {t.history}
-          </NavLink>
+            <div className="flex items-center gap-3">
+              <span className="text-xl">🌐</span>
+
+              <div>
+                <p className="font-semibold">Language</p>
+                <p className="text-xs text-gray-500">
+                  Choose your language
+                </p>
+              </div>
+            </div>
+
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className={`rounded-lg px-3 py-2 text-sm border ${
+                darkMode
+                  ? "bg-gray-800 border-gray-600"
+                  : "bg-white border-gray-300"
+              }`}
+            >
+              <option value="en">English</option>
+              <option value="hi">हिन्दी</option>
+            </select>
+          </div>
+
+          {/* Theme */}
+
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className={`w-full flex items-center justify-between rounded-xl px-4 py-4 transition ${
+              darkMode
+                ? "hover:bg-gray-800 border border-gray-700"
+                : "hover:bg-gray-100 border border-gray-300"
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-xl">
+                {darkMode ? "☀️" : "🌙"}
+              </span>
+
+              <span className="font-semibold">
+                {darkMode ? "Light Mode" : "Dark Mode"}
+              </span>
+            </div>
+
+            <FiChevronRight />
+          </button>
+          
+          {/* Login / Logout */}
+
+          <hr
+            className={`${
+              darkMode
+                ? "border-gray-700"
+                : "border-gray-300"
+            }`}
+          />
 
           {isLoggedIn ? (
             <button
@@ -211,45 +408,34 @@ const user = JSON.parse(localStorage.getItem("user"));
                 handleLogout();
                 setIsOpen(false);
               }}
-              className="text-red-500 font-semibold"
+              className={`w-full flex items-center justify-between rounded-xl px-4 py-4 transition ${
+                darkMode
+                  ? "hover:bg-red-900/20"
+                  : "hover:bg-red-100"
+              }`}
             >
-              {t.logout}
+              <div className="flex items-center gap-3 text-red-500">
+                <span className="text-xl">🚪</span>
+
+                <span className="font-semibold">
+                  Logout
+                </span>
+              </div>
+
+              <FiChevronRight className="text-red-500" />
             </button>
           ) : (
             <NavLink
               to="/login"
-              className={linkStyle}
               onClick={() => setIsOpen(false)}
+              className="block w-full rounded-xl bg-green-600 hover:bg-green-700 text-center text-white py-3 font-semibold"
             >
-              {t.login}
+              Login
             </NavLink>
           )}
-
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            className={`rounded-md px-2 py-1 border text-sm ${
-              darkMode
-                ? "bg-gray-800 border-gray-600 text-white"
-                : "bg-white border-gray-300 text-black"
-            }`}
-          >
-            <option value="en">🇺🇸 English</option>
-            <option value="hi">🇮🇳 हिन्दी</option>
-          </select>
-
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="px-3 py-1 border rounded-md text-sm"
-          >
-            {darkMode ? "☀️ Light" : "🌙 Dark"}
-          </button>
-
-         
-
-
         </div>
-      )}
+      </div>
+    )}
     </nav>
   );
 }
