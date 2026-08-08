@@ -11,6 +11,7 @@ import { Pencil, Trash2, CalendarDays, Copy } from "lucide-react";
 function History({ darkMode, setDarkMode }) {
   const [contents, setContents] = useState([]);
   const [editing, setEditing] = useState(null);
+  
   const [editForm, setEditForm] = useState({
     productName: "",
     category: "",
@@ -21,7 +22,17 @@ function History({ darkMode, setDarkMode }) {
   const [contentToDelete, setContentToDelete] = useState(null);
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (editing) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
 
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [editing]);
   useEffect(() => {
     const fetchHistory = async () => {
       try {
@@ -325,9 +336,9 @@ function History({ darkMode, setDarkMode }) {
         )}
       </div>
       {editing && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div
-            className={`w-full max-w-2xl rounded-xl shadow-xl p-6 ${
+            className={`w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl shadow-xl p-6 ${
               darkMode
                 ? "bg-gray-900 text-white"
                 : "bg-white text-black"
@@ -451,7 +462,13 @@ function History({ darkMode, setDarkMode }) {
               />
             </div>
 
-            <div className="flex justify-end gap-4">
+            <div
+              className={`pt-4 mt-4 border-t flex justify-end gap-4 ${
+                darkMode
+                  ? "border-gray-700"
+                  : "border-gray-200"
+              }`}
+            >
               <button
                 onClick={() => setEditing(null)}
                 className="px-5 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600"
