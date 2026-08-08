@@ -5,6 +5,9 @@ import { useLanguage } from "../context/LanguageContext";
 
 function Navbar({ darkMode, setDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+
+const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
   const { language, setLanguage, t } = useLanguage();
 
@@ -54,14 +57,68 @@ function Navbar({ darkMode, setDarkMode }) {
             {t.history}
           </NavLink>
 
-          {isLoggedIn ? (
+        {isLoggedIn ? (
+          <div className="relative">
             <button
-              onClick={handleLogout}
-              className="text-red-500 hover:text-red-700 font-semibold"
+              onClick={() => setProfileOpen(!profileOpen)}
+              className={`flex items-center gap-2 px-3 py-2 rounded-full transition ${
+                darkMode
+                  ? "hover:bg-gray-800"
+                  : "hover:bg-gray-100"
+              }`}
             >
-              {t.logout}
+              <div className="w-9 h-9 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
+                {user?.name?.charAt(0).toUpperCase()}
+              </div>
+
+              <span className="font-medium">
+                {user?.name?.split(" ")[0]}
+              </span>
+
+              <span>▼</span>
             </button>
-          ) : (
+
+            {profileOpen && (
+              <div
+                className={`absolute right-0 mt-3 w-72 rounded-2xl shadow-xl border z-50 ${
+                  darkMode
+                    ? "bg-gray-900 border-gray-700"
+                    : "bg-white border-gray-200"
+                }`}
+              >
+                <div className="p-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-green-600 text-white flex items-center justify-center text-lg font-bold">
+                      {user?.name?.charAt(0).toUpperCase()}
+                    </div>
+
+                    <div>
+                      <p className="font-semibold">
+                        {user?.name}
+                      </p>
+
+                      <p className="text-sm text-gray-500 break-all">
+                        {user?.email}
+                      </p>
+                    </div>
+                  </div>
+
+                  <hr className="my-4" />
+
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setProfileOpen(false);
+                    }}
+                    className="w-full rounded-lg bg-red-500 hover:bg-red-600 text-white py-2 font-medium transition"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
             <NavLink to="/login" className={linkStyle}>
               {t.login}
             </NavLink>

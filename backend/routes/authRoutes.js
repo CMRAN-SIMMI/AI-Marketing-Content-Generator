@@ -71,7 +71,10 @@ router.get(
     );
 
 res.redirect(
-  `${process.env.FRONTEND_URL}/oauth-success?token=${token}`
+  `${process.env.FRONTEND_URL}/oauth-success?` +
+  `token=${token}` +
+  `&name=${encodeURIComponent(req.user.name)}` +
+  `&email=${encodeURIComponent(req.user.email)}`
 );
   }
 );
